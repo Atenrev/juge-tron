@@ -15,7 +15,7 @@ El esquema básico dentro de la bola se compone de una base cilíndrica, sobre l
 
 ![base](Imágenes/esquema_base.JPG)
 
-las piezas aquí mostradas se obtendrán mediante impresión 3D. Las medidas, colocación y ángulos relevantes de estas se indican en el esquema. 
+las piezas aquí mostradas se obtendrán mediante impresión 3D. Las medidas, colocación y ángulos relevantes de estas se indican en el esquema. El diseño 3D de las varitas incluye un pequeño soporte para poder pegarlas a la base con pegamento, un espacio para poder colocar las ruedas, y un agujero con una pieza que permite fijar las ruedas a la varita.
 
 Debajo de la base se pegará un cilindro. Contendrá un peso que ejercerá como centro de masas para estabilizar el robot internamente. Este cilindro también se obtendrá con impresión 3D.
 
