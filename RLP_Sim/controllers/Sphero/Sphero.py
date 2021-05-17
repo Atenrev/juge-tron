@@ -19,6 +19,7 @@ class Sphero(Robot):
     rotationSpeed = 1 * np.pi / 180
     maxVelocity = 0
     lastMessage = None
+    imageShape = None
 
     def __init__(self):
         super(Sphero, self).__init__()
@@ -26,6 +27,8 @@ class Sphero(Robot):
         # Get devices and enable
         self.timeStep = int(self.getBasicTimeStep())
         self.camera = self.getDevice('camera')
+        h, w = self.camera.getHeight(), self.camera.getWidth()
+        self.imageShape = h, w
         self.emitter = self.getDevice('emitter')
         self.receiver = self.getDevice('receiver')
         self.accelerometer = self.getDevice('accelerometer')
@@ -148,11 +151,13 @@ class Sphero(Robot):
         Convert the velocity `r` and direction `rad` to motor velocities
         """
         r, rad = self.polarVel
-        if r > math.sqrt(2) * self.maxVelocity:
-            r = math.sqrt(2) * self.maxVelocity
+        if r > self.maxVelocity:
+            r = self.maxVelocity
 
-        if r < -math.sqrt(2) * self.maxVelocity:
-            r = -math.sqrt(2) * self.maxVelocity
+        if r < -self.maxVelocity:
+            r = -self.maxVelocity
+
+        self.polarVel[0] = r
 
         v = rect(r, rad)
         v = np.abs([v.real, v.imag])
@@ -172,13 +177,26 @@ class Sphero(Robot):
         self.velocity = vel
 
         self.setVelocity()
-        print([m1, m2], v, rad * 180 / np.pi)
-        print(vel)
+        # print([m1, m2], v, rad * 180 / np.pi)
+        # print(vel)
+
+    def substract_polar(self, v1, v2):
+        v1 = rect(*v1)
+        v2 = rect(*v2)
+        v3 = v1 - v2
+        print(v1, v2, v3, polar(v3))
+        return polar(v3)
 
     def stabilize(self):
-        x, y, z = self.gyro.getValues()
-        self.polarVel[0] = 0
-        self.movePolar()
+        # x, _, z = self.gyro.getValues()
+        # gyro = polar(complex(x, z))
+        # print(gyro[0], gyro[1]*180/np.pi)
+        # r, phi = self.substract_polar(self.polarVel, gyro)
+        # self.polarVel[0] = r
+        # self.polarVel[1] = phi
+        # print("gyro", gyro)
+        # self.movePolar()
+        pass
 
     def forward(self, speed=None, cameraLock=False):
         '''
@@ -290,7 +308,7 @@ class Sphero(Robot):
 
         s = struct.pack('ifff', self.VELOCITY_MSG, *self.velocity)
         if s != self.lastMessage:
-            print(s)
+            # print(s)
             self.lastMessage = s
             self.emitter.send(s)
 
@@ -368,6 +386,13 @@ class Sphero(Robot):
         if key == ord(' '):
             self.stop()
 
+    def getImage(self):
+        buffer = self.camera.getImage()
+        h, w = self.imageShape
+        img = np.frombuffer(buffer, np.uint8).reshape(
+            (h, w, 4))[:, :, :3]
+        return img
+
     def next_move(self, next_direction):
         if next_direction == Movement.STABILIZE:
             self.stabilize()
@@ -387,26 +412,44 @@ class Sphero(Robot):
         if next_direction == Movement.ROTATE_RIGHT:
             self.rotateRight()
 
-    def run(self):
-        while self.step(self.timeStep) != -1:
-            # key = self.keyboard.getKey()
-            # self.controlPolar(key)
-            # gyro = self.gyro.getValues()
-            # print(gyro)
-            cameraData = self.camera.getImage()
-            image = np.frombuffer(cameraData, np.uint8).reshape(
-                (self.camera.getHeight(), self.camera.getWidth(), 4)
-            )
-            # image = cv2.GaussianBlur(image,)
-            contours, horizon = self.obstacle_detector.detect(image)
-            self.obstacle_detector.draw_obstacles(image, contours, horizon)
-            cv2.waitKey(16)
+    def detectObstacle(self):
+        # https://github.com/BigFace83/BFRMR1/blob/167b9a152960246f5dd431af4718bff8b2a81a87/BFRMR1OpenCV.py#L230
+        img = self.getImage()
+        # convert img to grayscale and store result in imgGray
+        imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # blur the image slightly to remove noise
+        imgGray = cv2.bilateralFilter(imgGray, 9, 30, 30)
+        imgEdge = cv2.Canny(imgGray, 50, 100)  # edge detection
 
-            gyro = self.gyro.getValues()
-            next_direction = self.pathplanner.next_direction(
-                gyro, contours, horizon)
-            self.next_move(next_direction)
+        imagewidth = imgEdge.shape[1] - 1
+        imageheight = imgEdge.shape[0] - 1
+        img2 = img.copy()
+        for j in range(0, imagewidth, 8):  # for the width of image array
+            # step through every pixel in height of array from bottom to top
+            for i in range(imageheight-5, 0, -1):
+                # Ignore first couple of pixels as may trigger due to undistort
+                # check to see if the pixel is white which indicates an edge has been found
+                if imgEdge.item(i, j) == 255:
+                    # if it is, add x,y coordinates to ObstacleArray
+                    img2[:i, :j] = 0
+                    break  # if white pixel is found, skip rest of pixels in column
+        # cv2.imshow("", img2)
+        # cv2.waitKey(1)
+        return img2
+
+    def run(self):
+        self.i = 0
+
+        # out = cv2.VideoWriter('1.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 24, self.imageShape)
+
+        while self.step(self.timeStep) != -1:
+            self.controlPolar()
+            # self.stabilize()
+            self.detectObstacle()
+            # out.write(self.getImage())
 
 
 controller = Sphero()
 controller.run()
+
+# out.release()

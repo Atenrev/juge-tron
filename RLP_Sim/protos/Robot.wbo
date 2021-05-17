@@ -1,6 +1,6 @@
 #VRML_OBJ R2021a utf8
 Robot {
-  translation 0 0.1 0
+  translation 1.9 0.1 1.75
   rotation 1 0 0 0
   children [
     DEF Controller Solid {
@@ -17,7 +17,7 @@ Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation 0.5659091521127373 -0.3747180385214996 -0.7343930985253351 3.1052745527437557
+            rotation -0.23059906806668598 -0.3058456140599551 -0.9237329322737524 2.998594296371131
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {
@@ -913,13 +913,14 @@ Robot {
         }
       ]
       endPoint Camera {
+        translation 0 0.06 0
         rotation 0 -1 0 1.5708
         children [
           DEF Dummy Solid {
           }
         ]
         locked TRUE
-        fieldOfView 1.5
+        fieldOfView 1
         width 256
         height 256
         antiAliasing TRUE

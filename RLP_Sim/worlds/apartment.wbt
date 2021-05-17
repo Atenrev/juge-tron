@@ -8,10 +8,11 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.5632339292529654 -0.5783121738462939 -0.5901885889437712 4.236927511803014
-  position 2.260543575845134 10.889904801759883 1.571864779240324
+  orientation -0.14209654591255425 -0.9808464602056507 -0.13322459660950908 1.5256806576452862
+  position 1.0134668411187595 0.3571272073731462 1.7211841647564114
   exposure 0.5
-  follow "robot"
+  follow "robot:camera:solid"
+  followType "Mounted Shot"
 }
 TexturedBackground {
   texture "empty_office"
@@ -26,10 +27,14 @@ Group {
       translation 3.3 0 4.95
       children [
         Shape {
-          appearance Parquetry {
-            textureTransform TextureTransform {
-              scale 6 9
-            }
+          appearance PBRAppearance {
+            baseColor 0.447059 0.239216 0.0666667
+            roughness 1
+            metalness 0
+            IBLStrength 0
+            normalMapFactor 0
+            occlusionMapStrength 0
+            emissiveIntensity 0
           }
           geometry DEF FLOOR_PLANE Plane {
             size 6.6 9.9
@@ -514,7 +519,7 @@ Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation 0.5659091521127373 -0.3747180385214996 -0.7343930985253351 3.1052745527437557
+            rotation -0.23059906806668598 -0.3058456140599551 -0.9237329322737524 2.998594296371131
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {
@@ -1410,13 +1415,14 @@ Robot {
         }
       ]
       endPoint Camera {
+        translation 0 0.06 0
         rotation 0 -1 0 1.5708
         children [
           DEF Dummy Solid {
           }
         ]
         locked TRUE
-        fieldOfView 1.5
+        fieldOfView 1
         width 256
         height 256
         antiAliasing TRUE
