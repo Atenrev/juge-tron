@@ -1,14 +1,12 @@
 #VRML_SIM R2021a utf8
 WorldInfo {
   physics "spherePhysics"
-  basicTimeStep 16
-  FPS 25
-  optimalThreadCount 4
+  basicTimeStep 8
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.3204586831454872 0.8942144780029264 0.3125487157654216 4.625681215818868
-  position -2.413931614409486 1.875430534250302 0.17617402033009857
+  orientation 0.2401343511638767 0.9402607769820949 0.24134035025277306 4.645830541911181
+  position -0.7704407050763974 0.556220183079666 0.015582133929340353
   follow "robot"
 }
 TexturedBackground {
@@ -1198,7 +1196,7 @@ Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation 0.1979780636934947 0.3969731606005025 0.8962237421866384 2.3023371738563583
+            rotation 0.9956246255427134 0.09120701919471326 -0.020319563542231977 2.4519571180949717
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {
@@ -1303,7 +1301,7 @@ Robot {
                     }
                     endPoint DEF sr02 Solid {
                       translation 0.0035000000000000014 0 0.006062177826491071
-                      rotation -1.620925615952744e-14 1 2.736699755701058e-14 5.235987755983
+                      rotation -1.620925615952744e-14 1 2.73669975570106e-14 5.235987755983
                       children [
                         DEF r2 Transform {
                           rotation 1 0 0 1.5708
@@ -1428,7 +1426,7 @@ Robot {
                     }
                     endPoint DEF sr07 Solid {
                       translation -0.006062177826491073 0 -0.0034999999999999983
-                      rotation 8.893385412459552e-15 0.9999999999999999 2.2736320541546435e-15 2.617993877991493
+                      rotation 8.893385412459553e-15 1 2.273632054154644e-15 2.617993877991493
                       children [
                         DEF r7 Transform {
                           rotation 1 0 0 1.5708
@@ -1503,7 +1501,7 @@ Robot {
                     }
                     endPoint DEF sr010 Solid {
                       translation 0.0034999999999999957 0 -0.0060621778264910746
-                      rotation 1.5343629145015307e-14 1 2.7467611518617398e-14 1.0471975511965792
+                      rotation 1.534362914501533e-14 1 2.746761151861742e-14 1.0471975511965792
                       children [
                         DEF r10 Transform {
                           rotation 1 0 0 1.5708
@@ -2206,7 +2204,7 @@ Robot {
                     }
                     endPoint DEF sr210 Solid {
                       translation 0.0034999999999999957 0 -0.0060621778264910746
-                      rotation 4.9162063309184125e-15 1 8.600758993893166e-15 1.0471975511965765
+                      rotation 4.916206330918418e-15 1 8.600758993893166e-15 1.0471975511965765
                       children [
                         DEF r10 Transform {
                           rotation 1 0 0 1.5708
@@ -2334,7 +2332,6 @@ Robot {
 }
 Robot {
   translation 4.15183 0.045 1.72037
-  rotation 0 1 0 -3.12513
   children [
     Transform {
       rotation 9.739736986043976e-07 0.7071067811862122 0.7071067811862122 3.14159
