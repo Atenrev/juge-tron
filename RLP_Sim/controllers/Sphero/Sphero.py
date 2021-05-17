@@ -426,26 +426,85 @@ class Sphero(Robot):
         img2 = img.copy()
         for j in range(0, imagewidth, 8):  # for the width of image array
             # step through every pixel in height of array from bottom to top
-            for i in range(imageheight-5, 0, -1):
+            for i in range(imageheight, 0, -1):
                 # Ignore first couple of pixels as may trigger due to undistort
                 # check to see if the pixel is white which indicates an edge has been found
                 if imgEdge.item(i, j) == 255:
                     # if it is, add x,y coordinates to ObstacleArray
                     img2[:i, :j] = 0
                     break  # if white pixel is found, skip rest of pixels in column
-        # cv2.imshow("", img2)
-        # cv2.waitKey(1)
+        # cv2.imshow("", imgEdge)
+        self._prepare_subimage_for_detection(img)
+        # cv2.imshow("", imgEdge)
+        cv2.imshow("", img2)
+        cv2.waitKey(1)
         return img2
+
+    def asd(self, lower_RGB=np.array([0, 0, 0]), upper_RGB=np.array([255, 255, 255]), contour_threshold=300):
+        self.lower_RGB = lower_RGB.astype('uint8')
+        self.upper_RGB = upper_RGB.astype('uint8')
+        self.contour_threshold = contour_threshold
+        self.images = []
+        self.prev_gray = None
+        self.mask = np.zeros((256, 256, 3))
+        # Sets image saturation to maximum
+        self.mask[..., 1] = 255
+
+    def _prepare_subimage_for_detection(self, image):
+        # ret = a boolean return value from getting the frame, frame = the current frame being projected in the video
+        # ret, frame = cap.read()
+        # Opens a new window and displays the input frame
+        # cv.imshow("input", frame)
+        # Converts each frame to grayscale - we previously only converted the first frame to grayscale
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+        def sigmoid(x):
+            z = np.exp(-x)
+            return 1 / (1 + z)
+
+        if self.prev_gray is not None:
+            # Calculates dense optical flow by Farneback method
+            # https://docs.opencv.org/3.0-beta/modules/video/doc/motion_analysis_and_object_tracking.html#calcopticalflowfarneback
+            flow = cv2.calcOpticalFlowFarneback(
+                self.prev_gray, gray, None, 0.5, 3, 15, 3, 5, 1.2, 0)
+            # Computes the magnitude and angle of the 2D vectors
+            magnitude, angle = cv2.cartToPolar(flow[..., 0], flow[..., 1])
+            # Sets image hue according to the optical flow direction
+            # self.mask[..., 0] = angle * 180 / np.pi
+            # Sets image value according to the optical flow magnitude (normalized)
+            np.save("n.npy", magnitude)
+            self.mask[..., 2] = cv2.normalize(sigmoid(magnitude),
+                                              None, 0, 255, cv2.NORM_MINMAX)
+            # Converts HSV to RGB (BGR) color representation
+            rgb = cv2.cvtColor(self.mask.astype(np.float32), cv2.COLOR_HSV2BGR)
+            # rgb[:,:,2] = np.where(rgb[:,:,2] < 50, 0, rgb[:,:,2])
+            # Opens a new window and displays the output frame
+            # for i in range(0, rgb.shape[0], 8):
+            #     for j in range(0, rgb.shape[1], 8):
+
+            # cv2.arrowedLine(rgb, flow[i, j, 0],
+            #                 flow[i, j, 1], (255, 0, 0), 1)
+            cv2.imshow("dense optical flow", rgb)
+
+        # Updates previous frame
+        self.prev_gray = gray
+        return gray
 
     def run(self):
         self.i = 0
-
+        self.asd()
         # out = cv2.VideoWriter('1.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 24, self.imageShape)
-
+        between_time = 0.064
+        last_frame_time = 0
+        import time
         while self.step(self.timeStep) != -1:
+            frame_time = time.time()
             self.controlPolar()
-            # self.stabilize()
-            self.detectObstacle()
+            if last_frame_time + between_time < frame_time:
+                self._prepare_subimage_for_detection(self.getImage())
+                last_frame_time = frame_time
+                cv2.waitKey(1)
+            # self.detectObstacle()
             # out.write(self.getImage())
 
 
