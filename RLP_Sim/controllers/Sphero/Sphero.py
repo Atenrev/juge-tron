@@ -1,10 +1,9 @@
 from controller import Robot
 from cmath import rect, polar
-import math
 import numpy as np
 import struct
-import cv2
-from visio.obstacle_detection import ObstacleDetection
+import time
+from obstacle_detection import ObstacleDetection
 from pathplanner import PathPlanner, Movement
 SPHERE_R = 0.5
 WHEEL_R = 0.03
@@ -51,15 +50,8 @@ class Sphero(Robot):
             self.motors.append(m)
         self.maxVelocity = int(self.motors[0].getMaxVelocity())
 
-        self.obstacle_detector = ObstacleDetection(
-            lower_RGB=np.array([0, 0, 0, 0]),
-            upper_RGB=np.array([60, 60, 60, 255])
-        )
-        self.pathplanner = PathPlanner(
-            self.camera.getHeight(),
-            self.camera.getWidth(),
-            debug=True
-        )
+        self.detector = ObstacleDetection()
+        self.pathplanner = PathPlanner(*self.imageShape, debug=True)
 
     def sleep(self, ms):
         """
@@ -177,8 +169,8 @@ class Sphero(Robot):
         self.velocity = vel
 
         self.setVelocity()
-        # print([m1, m2], v, rad * 180 / np.pi)
-        # print(vel)
+        self.stabilize()
+        print([m1, m2], r, rad * 180 / np.pi)
 
     def substract_polar(self, v1, v2):
         v1 = rect(*v1)
@@ -188,15 +180,10 @@ class Sphero(Robot):
         return polar(v3)
 
     def stabilize(self):
-        # x, _, z = self.gyro.getValues()
-        # gyro = polar(complex(x, z))
-        # print(gyro[0], gyro[1]*180/np.pi)
-        # r, phi = self.substract_polar(self.polarVel, gyro)
-        # self.polarVel[0] = r
-        # self.polarVel[1] = phi
-        # print("gyro", gyro)
-        # self.movePolar()
-        pass
+        mag = np.linalg.norm(self.getGyroValues())
+        if mag > 3:
+            print("Stabilization")
+            self.stop()
 
     def forward(self, speed=None, cameraLock=False):
         '''
@@ -205,8 +192,8 @@ class Sphero(Robot):
 
         Parameter
         ---------
-        dSpeed: int, optional
-            Defualt is `self.speed`.
+        Speed: int, optional
+            Defualt is `self.speed`, can be positive or negative (backwards)
 
         cameraLock: bool, optional
             Camera-free movement.
@@ -216,46 +203,7 @@ class Sphero(Robot):
         if not cameraLock:
             self.setCamera(self.cameraPosition)
 
-    def backward(self, speed=None, cameraLock=False):
-        '''
-        Move the robot in the backward direction.
-        If `cameraLock` is set then the camera will be fixed in place.
-
-        Parameter
-        ---------
-        dSpeed: int, optional
-            Defualt is `self.speed`.
-
-        cameraLock: bool, optional
-            Camera-free movement.
-        '''
-        self.polarVel[0] -= self.speed if speed is None else speed
-        self.movePolar()
-        if not cameraLock:
-            self.setCamera(self.cameraPosition)
-
-    def rotateLeft(self, rotationSpeed=None, cameraLock=False):
-        '''
-        Rotate the robot to the left by `rotationSpeed` radians.
-        If `cameraLock` is set then the camera will be fixed in place.
-
-        Parameter
-        ---------
-        rotationSpeed: int, optional
-            Defualt is `self.rotationSpeed`.
-
-        cameraLock: bool, optional
-            Camera-free rotation.
-        '''
-        self.polarVel[1] += self.rotationSpeed if rotationSpeed is None else rotationSpeed
-        if cameraLock:
-            self.movePolar()
-            return
-        self.cameraPosition += self.rotationSpeed if rotationSpeed is None else rotationSpeed
-        self.movePolar()
-        self.setCamera(self.cameraPosition)
-
-    def rotateRight(self, rotationSpeed=None, cameraLock=False):
+    def rotate(self, rotation=None, cameraLock=False):
         '''
         Rotate the robot to the right by `rotationSpeed` radians.
         If `cameraLock` is set then the camera will be fixed in place.
@@ -263,16 +211,16 @@ class Sphero(Robot):
         Parameter
         ---------
         rotationSpeed: int, optional
-            Defualt is `self.rotationSpeed`.
+            Defualt is `self.rotationSpeed`, can be positive (right) or negative (left)
 
         cameraLock: bool, optional
             Camera-free rotation.
         '''
-        self.polarVel[1] -= self.rotationSpeed if rotationSpeed is None else rotationSpeed
+        self.polarVel[1] += self.rotationSpeed if rotation is None else rotation
         if cameraLock:
             self.movePolar()
             return
-        self.cameraPosition -= self.rotationSpeed if rotationSpeed is None else rotationSpeed
+        self.cameraPosition += self.rotationSpeed if rotation is None else rotation
         self.movePolar()
         self.setCamera(self.cameraPosition)
 
@@ -305,7 +253,6 @@ class Sphero(Robot):
         '''
         Send data to the plugin
         '''
-
         s = struct.pack('ifff', self.VELOCITY_MSG, *self.velocity)
         if s != self.lastMessage:
             # print(s)
@@ -354,31 +301,31 @@ class Sphero(Robot):
         key = self.keyboard.getKey()
 
         if key == ord('W'):
-            self.forward()
+            self.forward(self.speed)
 
         if key == ord('S'):
-            self.backward()
+            self.forward(-self.speed)
 
         if key == ord('A'):
-            self.rotateLeft()
+            self.rotate(-self.rotationSpeed)
 
         if key == ord('D'):
-            self.rotateRight()
+            self.rotate(self.rotationSpeed)
 
         if key == ord('Q'):
             self.changeDirection()
 
         if key == ord('I'):
-            self.forward(cameraLock=True)
+            self.forward(-self.speed, cameraLock=True)
 
         if key == ord('K'):
-            self.backward(cameraLock=True)
+            self.forward(-self.speed, cameraLock=True)
 
         if key == ord('J'):
-            self.rotateLeft(cameraLock=True)
+            self.rotate(-self.rotationSpeed, cameraLock=True)
 
         if key == ord('L'):
-            self.rotateRight(cameraLock=True)
+            self.rotate(-self.rotationSpeed, cameraLock=True)
 
         if key == ord('U'):
             self.changeDirection(cameraLock=True)
@@ -394,121 +341,29 @@ class Sphero(Robot):
         return img
 
     def next_move(self, next_direction):
-        if next_direction == Movement.STABILIZE:
-            self.stabilize()
-
-        if next_direction == Movement.STOP:
-            self.stop()
-
-        if next_direction == Movement.FORWARD:
-            self.forward()
-
-        if next_direction == Movement.BACKWARDS:
-            self.backward()
-
-        if next_direction == Movement.ROTATE_LEFT:
-            self.rotateLeft()
-
-        if next_direction == Movement.ROTATE_RIGHT:
-            self.rotateRight()
-
-    def detectObstacle(self):
-        # https://github.com/BigFace83/BFRMR1/blob/167b9a152960246f5dd431af4718bff8b2a81a87/BFRMR1OpenCV.py#L230
-        img = self.getImage()
-        # convert img to grayscale and store result in imgGray
-        imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # blur the image slightly to remove noise
-        imgGray = cv2.bilateralFilter(imgGray, 9, 30, 30)
-        imgEdge = cv2.Canny(imgGray, 50, 100)  # edge detection
-
-        imagewidth = imgEdge.shape[1] - 1
-        imageheight = imgEdge.shape[0] - 1
-        img2 = img.copy()
-        for j in range(0, imagewidth, 8):  # for the width of image array
-            # step through every pixel in height of array from bottom to top
-            for i in range(imageheight, 0, -1):
-                # Ignore first couple of pixels as may trigger due to undistort
-                # check to see if the pixel is white which indicates an edge has been found
-                if imgEdge.item(i, j) == 255:
-                    # if it is, add x,y coordinates to ObstacleArray
-                    img2[:i, :j] = 0
-                    break  # if white pixel is found, skip rest of pixels in column
-        # cv2.imshow("", imgEdge)
-        self._prepare_subimage_for_detection(img)
-        # cv2.imshow("", imgEdge)
-        cv2.imshow("", img2)
-        cv2.waitKey(1)
-        return img2
-
-    def asd(self, lower_RGB=np.array([0, 0, 0]), upper_RGB=np.array([255, 255, 255]), contour_threshold=300):
-        self.lower_RGB = lower_RGB.astype('uint8')
-        self.upper_RGB = upper_RGB.astype('uint8')
-        self.contour_threshold = contour_threshold
-        self.images = []
-        self.prev_gray = None
-        self.mask = np.zeros((256, 256, 3))
-        # Sets image saturation to maximum
-        self.mask[..., 1] = 255
-
-    def _prepare_subimage_for_detection(self, image):
-        # ret = a boolean return value from getting the frame, frame = the current frame being projected in the video
-        # ret, frame = cap.read()
-        # Opens a new window and displays the input frame
-        # cv.imshow("input", frame)
-        # Converts each frame to grayscale - we previously only converted the first frame to grayscale
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-        def sigmoid(x):
-            z = np.exp(-x)
-            return 1 / (1 + z)
-
-        if self.prev_gray is not None:
-            # Calculates dense optical flow by Farneback method
-            # https://docs.opencv.org/3.0-beta/modules/video/doc/motion_analysis_and_object_tracking.html#calcopticalflowfarneback
-            flow = cv2.calcOpticalFlowFarneback(
-                self.prev_gray, gray, None, 0.5, 3, 15, 3, 5, 1.2, 0)
-            # Computes the magnitude and angle of the 2D vectors
-            magnitude, angle = cv2.cartToPolar(flow[..., 0], flow[..., 1])
-            # Sets image hue according to the optical flow direction
-            # self.mask[..., 0] = angle * 180 / np.pi
-            # Sets image value according to the optical flow magnitude (normalized)
-            np.save("n.npy", magnitude)
-            self.mask[..., 2] = cv2.normalize(sigmoid(magnitude),
-                                              None, 0, 255, cv2.NORM_MINMAX)
-            # Converts HSV to RGB (BGR) color representation
-            rgb = cv2.cvtColor(self.mask.astype(np.float32), cv2.COLOR_HSV2BGR)
-            # rgb[:,:,2] = np.where(rgb[:,:,2] < 50, 0, rgb[:,:,2])
-            # Opens a new window and displays the output frame
-            # for i in range(0, rgb.shape[0], 8):
-            #     for j in range(0, rgb.shape[1], 8):
-
-            # cv2.arrowedLine(rgb, flow[i, j, 0],
-            #                 flow[i, j, 1], (255, 0, 0), 1)
-            cv2.imshow("dense optical flow", rgb)
-
-        # Updates previous frame
-        self.prev_gray = gray
-        return gray
+        v, drad = next_direction[0], next_direction[1]
+        self.polarVel[0] = v
+        self.polarVel[1] += drad
+        self.cameraPosition += drad
+        self.movePolar()
+        self.setCamera(self.cameraPosition)
 
     def run(self):
-        self.i = 0
-        self.asd()
-        # out = cv2.VideoWriter('1.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 24, self.imageShape)
-        between_time = 0.064
+        fps = 10
+        fps = 1 / fps
         last_frame_time = 0
-        import time
+        next_direction = None
+
         while self.step(self.timeStep) != -1:
             frame_time = time.time()
-            self.controlPolar()
-            if last_frame_time + between_time < frame_time:
-                self._prepare_subimage_for_detection(self.getImage())
+
+            if last_frame_time + fps < frame_time:
+                img = self.detector.detect(self.getImage(), draw=True)
+                next_direction = self.pathplanner.next_direction(img)
                 last_frame_time = frame_time
-                cv2.waitKey(1)
-            # self.detectObstacle()
-            # out.write(self.getImage())
+
+            self.next_move(next_direction)
 
 
 controller = Sphero()
 controller.run()
-
-# out.release()
