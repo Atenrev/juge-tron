@@ -197,6 +197,7 @@ class PathPlanner:
         dels obstacles i l'horitzó.
         """
         def last_nonzero(arr, axis, invalid_val=-1):
+            # https://stackoverflow.com/questions/47269390/numpy-how-to-find-first-non-zero-value-in-every-column-of-a-numpy-array
             mask = arr != 0
             val = arr.shape[axis] - \
                 np.flip(mask, axis=axis).argmax(axis=axis) - 1

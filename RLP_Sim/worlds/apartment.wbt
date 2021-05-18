@@ -8,11 +8,10 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.02387654169630981 -0.9994025201017153 -0.024990269525651834 1.6169676440905665
-  position 3.7035053676556546 0.16790668534242575 2.9041487153214485
+  orientation -0.25983318399295946 -0.9166325207194601 -0.3037623058504289 1.8116865257094614
+  position 1.497684600983117 3.30334041882524 2.222631165432983
   exposure 0.5
-  follow "robot:camera:solid"
-  followType "Mounted Shot"
+  follow "robot"
 }
 TexturedBackground {
   texture "empty_office"
@@ -489,7 +488,7 @@ Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation 0.4893901340267799 0.7508461156254395 -0.4435396344944154 3.3399381685296667
+            rotation -0.6973120574678279 0.20903705830780694 0.6856087825896073 5.287399392217639
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {
