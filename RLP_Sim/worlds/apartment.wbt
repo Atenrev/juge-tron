@@ -8,11 +8,10 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.14209654591255425 -0.9808464602056507 -0.13322459660950908 1.5256806576452862
-  position 1.0134668411187595 0.3571272073731462 1.7211841647564114
+  orientation -0.25983318399295946 -0.9166325207194601 -0.3037623058504289 1.8116865257094614
+  position 1.497684600983117 3.30334041882524 2.222631165432983
   exposure 0.5
-  follow "robot:camera:solid"
-  followType "Mounted Shot"
+  follow "robot"
 }
 TexturedBackground {
   texture "empty_office"
@@ -28,7 +27,7 @@ Group {
       children [
         Shape {
           appearance PBRAppearance {
-            baseColor 0.447059 0.239216 0.0666667
+            baseColor 0 1 0.117647
             roughness 1
             metalness 0
             IBLStrength 0
@@ -414,10 +413,6 @@ Group {
       name "sofa 2"
       color 0.13333333333333333 0.13333333333333333 0.13333333333333333
     }
-    Carpet {
-      translation 2.55076 -0.015 7.14218
-      color 0.13725490196078433 0.13725490196078433 0.13725490196078433
-    }
     BunchOfSunFlowers {
       translation 3.9144 0 9.05979
     }
@@ -438,31 +433,6 @@ Group {
       translation 2.8744 0.611066 7.20688
       rotation 0 1 0 1.32183
       name "can 4"
-    }
-    Cabinet {
-      translation 6.4326 0 3.46807
-      rotation 0 1 0 4.71239
-      name "cabinet 4"
-      depth 0.4
-      outerThickness 0.02
-      rowsHeights [
-        0.52, 0.44, 0.44, 0.44, 0.44
-      ]
-      columnsWidths [
-        0.96
-      ]
-      layout [
-        "Shelf  (1, 2, 1, 0)"
-        "Shelf  (1, 3, 1, 0)"
-        "Shelf  (1, 4, 1, 0)"
-        "Shelf  (1, 5, 1, 0)"
-      ]
-      primaryAppearance PaintedWood {
-        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
-      }
-      secondaryAppearance PaintedWood {
-        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
-      }
     }
     Book {
       translation 6.15092 1.52924 3.02231
@@ -502,8 +472,7 @@ Group {
   ]
 }
 Robot {
-  translation 1.9 0.1 1.75
-  rotation 1 0 0 0
+  translation 4.21 0.1 2.95
   children [
     DEF Controller Solid {
       children [
@@ -519,7 +488,7 @@ Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation -0.23059906806668598 -0.3058456140599551 -0.9237329322737524 2.998594296371131
+            rotation -0.6973120574678279 0.20903705830780694 0.6856087825896073 5.287399392217639
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {
@@ -1100,6 +1069,7 @@ Robot {
           device [
             RotationalMotor {
               name "wheel2"
+              acceleration 1
               maxVelocity 200
             }
           ]
@@ -1390,7 +1360,6 @@ Robot {
       }
     }
     Accelerometer {
-      yAxis FALSE
       resolution 0.1
     }
     Pen {
@@ -1398,7 +1367,6 @@ Robot {
       inkDensity 1
     }
     Gyro {
-      yAxis FALSE
       resolution 0.1
     }
     Receiver {
