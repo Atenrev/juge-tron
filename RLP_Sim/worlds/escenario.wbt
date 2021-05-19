@@ -1,9 +1,8 @@
 #VRML_SIM R2021a utf8
 WorldInfo {
   physics "spherePhysics"
-  basicTimeStep 16
+  basicTimeStep 8
   FPS 24
-  optimalThreadCount 4
   coordinateSystem "NUE"
 }
 Viewpoint {
