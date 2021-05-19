@@ -917,13 +917,13 @@ DEF Cat Robot {
                 }
                 texture ImageTexture {
                   url [
-                    "D:/UAB/3r/RLP/Pràctica/juge-tron/RLP_Sim/protos/cat/Cat_diffuse.jpg"
+                    "D:/Users/Pablo/Documentos/juge-tron/RLP_Sim/protos/cat/Cat_diffuse.jpg"
                   ]
                 }
               }
               geometry Mesh {
                 url [
-                  "D:/UAB/3r/RLP/Pràctica/juge-tron/RLP_Sim/protos/cat/cat.obj"
+                  "D:/Users/Pablo/Documentos/juge-tron/RLP_Sim/protos/cat/cat.obj"
                 ]
               }
             }

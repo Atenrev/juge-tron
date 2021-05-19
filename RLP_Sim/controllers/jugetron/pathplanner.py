@@ -21,10 +21,10 @@ class StateMachine:
             self.timelimit = 3
         elif state == State.FLEE:
             self.set_counter()
-            self.timelimit = np.random.randint(45, 55)
+            self.timelimit = np.random.randint(1, 5)
         elif state == State.SEARCH_CAT:
             self.set_counter()
-            self.timelimit = 25
+            self.timelimit = 5
         elif state == State.SPRINT:
             self.set_counter()
             self.timelimit = 5

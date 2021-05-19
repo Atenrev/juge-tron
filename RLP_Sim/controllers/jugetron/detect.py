@@ -2,23 +2,32 @@
 import numpy as np
 import cv2
 import torch
+from torch._C import device
 from models.experimental import attempt_load
 from utils.datasets import letterbox
 from utils.general import check_img_size,  non_max_suppression, scale_coords
 from utils.plots import plot_one_box
+from utils.torch_utils import select_device
 
 
 class Yolo:
-    def __init__(self, weights='yolov5s.pt', view_img=True, imgsz=256) -> None:
-        self.device = torch.device('cpu')
+    def __init__(self, weights='yolov5s.pt', view_img=True, imgsz=256, device='cpu') -> None:
+
         self.view_img = view_img
+        self.device = select_device(device)
+        self.half = self.device.type != 'cpu'  # half precision only supported on CUDA
         # Load model
         self.model = attempt_load(
             weights, map_location=self.device)  # load FP32 model
+        if self.half:
+            self.model.half()  # to FP16
         self.stride = int(self.model.stride.max())  # model stride
         self.imgsz = check_img_size(imgsz, s=self.stride)  # check img_size
         self.names = self.model.module.names if hasattr(
             self.model, 'module') else self.model.names  # get class names
+        if self.device.type != 'cpu':
+            self.model(torch.zeros(1, 3, imgsz, imgsz).to(self.device).type_as(
+                next(self.model.parameters())))  # run once
         return
 
     def show_inference_and_return(self, im0s):
@@ -30,7 +39,8 @@ class Yolo:
         img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
         img = np.ascontiguousarray(img)
         img = torch.from_numpy(img).to(self.device)
-        img = img.float()  # uint8 to fp16/32
+        img = img.half() if self.half else img.float()  # uint8 to fp16/32
+
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
         if img.ndimension() == 3:
             img = img.unsqueeze(0)
