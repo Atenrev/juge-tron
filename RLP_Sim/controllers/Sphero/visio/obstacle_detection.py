@@ -20,7 +20,7 @@ class ObstacleDetection:
             flow = cv2.calcOpticalFlowFarneback(
                 self.prev_gray, gray, None, 0.5, 3, 15, 3, 5, 1.2, 0)
             # Computes the magnitude and angle of the 2D vectors
-            magnitude, angle = cv2.cartToPolar(flow[..., 0], flow[..., 1])
+            magnitude, angle = cv2.cartToPolar(flow[..., 0], flow[..., 1])            
             magnitude = cv2.normalize(magnitude, None, 0, 255, cv2.NORM_MINMAX)
             mask = np.zeros_like(magnitude, dtype='uint8')
             mask[magnitude > 1] = 255
@@ -39,3 +39,20 @@ class ObstacleDetection:
         self.prev_gray = gray
 
         return mask
+
+
+if __name__ == "__main__":
+    cap = cv2.VideoCapture('example_obstacles.mp4')
+    detector = ObstacleDetection()
+
+    while True:
+        ret, image_np = cap.read()
+
+        if ret:
+            image_np = image_np[:, 160:-160]
+            contours, _ = detector.detect(image_np, True)
+
+        if cv2.waitKey(1) == ord("q"):
+            cv2.destroyAllWindows()
+            cap.release()
+            break

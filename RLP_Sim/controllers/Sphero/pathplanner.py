@@ -8,17 +8,9 @@ from scipy.special import expit
 
 class State(Enum):
     FLEE = 0
-    NEW_ORIENTATION = 1
-    STABILIZE = 2
-
-
-class Movement(Enum):
-    BACKWARDS = -2
-    STOP = -1
-    STABILIZE = 0
-    FORWARD = 1
-    ROTATE_LEFT = 2
-    ROTATE_RIGHT = 3
+    SEARCH_CAT = 1
+    SPRINT = 2
+    STABILIZE = 3
 
 
 class StateMachine:
@@ -30,17 +22,20 @@ class StateMachine:
             self.timelimit = 3
         elif state == State.FLEE:
             self.set_counter()
-            self.timelimit = np.random.randint(10, 16)
-        elif state == State.NEW_ORIENTATION:
+            self.timelimit = np.random.randint(6, 12)
+        elif state == State.SEARCH_CAT:
             self.set_counter()
             self.timelimit = -1
+        elif state == State.SPRINT:
+            self.set_counter()
+            self.timelimit = np.random.randint(2, 4)
 
     def set_counter(self) -> None:
         self.counter = time.time()
 
     def update(self, gyro_magnitude: float) -> None:
         if self.state == State.STABILIZE:
-            if gyro_magnitude < 3 and self.counter == -1:
+            if gyro_magnitude < 1.5 and self.counter == -1:
                 self.set_counter()
 
     def next_state(self, gyro_magnitude: float) -> StateMachine:
@@ -53,12 +48,19 @@ class StateMachine:
         elif self.state == State.FLEE:
             if gyro_magnitude > 3:
                 return StateMachine(State.STABILIZE)
+            # elif self.counter + self.timelimit < time.time():
+            #     return StateMachine(State.SEARCH_CAT)
             else:
                 return self
 
-        elif self.state == State.NEW_ORIENTATION:
-            # TODO
-            pass
+        elif self.state == State.SEARCH_CAT:
+            return self
+
+        elif self.state == State.SPRINT:
+            if self.counter + self.timelimit < time.time():
+                return StateMachine(State.FLEE)
+            else:
+                return self
 
 
 class Node:
@@ -191,6 +193,13 @@ class PathPlanner:
 
         self.options = options
 
+    def _search_cat(self, bounding_boxes: np.array, image: np.array) -> list:
+        # TODO: (espero que no calgui l'estat sprint)
+        return [0, 0]
+
+    def _sprint(self) -> list:
+        return [0, 0]
+
     def _flee(self, motion_image: np.array) -> list:
         """
         Calcula les velocitats objectiu basant-se en la posició
@@ -226,5 +235,69 @@ class PathPlanner:
 
         return [200 * expit(horizon_average), direction * np.pi / 180]
 
-    def next_direction(self, motion_image: np.array) -> list:
-        return self._flee(motion_image)
+    def _stabilize(self) -> list:
+        return [0,  0]
+
+    def _next_state(self, gyro: list) -> None:
+        gyro_magnitude = np.linalg.norm(gyro)
+        self.current_state.update(gyro_magnitude)
+        self.current_state = self.current_state.next_state(gyro_magnitude)
+        print("gyro magnitude:", gyro_magnitude,
+              "state:", self.current_state.state)
+
+    def next_direction(self, gyro: list, vision_image: np.array, original_image: np.array) -> list:
+        self._next_state(gyro)
+
+        if self.current_state.state == State.FLEE:
+            return self._flee(vision_image)
+        elif self.current_state.state == State.SEARCH_CAT:
+            return self._search_cat(vision_image, original_image)
+        else:
+            return self._stabilize()
+
+
+if __name__ == "__main__":
+    motion_image = cv2.cvtColor(cv2.imread("exemple.png"), cv2.COLOR_BGR2GRAY)
+    horizon_vector = []
+    left_limit_col = left_limit = 0
+    right_limit_col = right_limit = 0
+
+    for col in range(motion_image.shape[1]):
+        max_row = np.argwhere(motion_image[:, col] > 0)
+
+        if max_row.size:
+            horizon_vector.append(max_row[-1, 0])
+            right_limit = max_row[-1, 0]
+            right_limit_col = col
+
+            if left_limit == 0:
+                left_limit_col = col
+                left_limit = max_row[-1, 0]
+        else:
+            horizon_vector.append(0)
+
+    horizon_average = np.mean(horizon_vector)
+    horizon_min = min(left_limit, right_limit)
+    print(left_limit, right_limit, horizon_average)
+
+    pts_src = np.array([
+        [motion_image.shape[1], motion_image.shape[0]],
+        [0, motion_image.shape[0]],
+        [0, horizon_min],
+        [motion_image.shape[1], horizon_min]
+    ])
+    pts_dst = np.array([
+        [motion_image.shape[1], motion_image.shape[0]],
+        [0, motion_image.shape[0]],
+        [0, 0],
+        [motion_image.shape[1], 0],
+    ])
+
+    h, status = cv2.findHomography(pts_src, pts_dst)
+    im_dst = cv2.warpPerspective(
+        motion_image, h, (motion_image.shape[1], motion_image.shape[0]))
+    im_dst = cv2.resize(im_dst, (32, 32))
+    astar = AStar()
+
+    cv2.imshow("Sí homo(grafia)", cv2.resize(astar.search(im_dst), (512, 512)))
+    cv2.waitKey(0)

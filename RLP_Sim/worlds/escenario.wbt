@@ -9,6 +9,7 @@ WorldInfo {
 Viewpoint {
   orientation 0.621832109650553 0.547729162458497 0.559747793206955 4.23485623645882
   position 2.084752091490656 10.7726910151431 1.7341075227721912
+  follow "robot"
 }
 TexturedBackground {
   luminosity 2
@@ -1262,7 +1263,7 @@ DEF Jugetron Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation -0.23059906806668598 -0.3058456140599551 -0.9237329322737524 2.998594296371131
+            rotation -0.34684877869953645 -0.9351517140561155 0.07202219388875376 3.207928548485199
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {

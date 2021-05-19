@@ -3,8 +3,10 @@ from cmath import rect, polar
 import numpy as np
 import struct
 import time
-from obstacle_detection import ObstacleDetection
-from pathplanner import PathPlanner, Movement
+from visio.obstacle_detection import ObstacleDetection
+# from visio.custom_detection import ObjectDetection
+from pathplanner import PathPlanner, State
+
 SPHERE_R = 0.5
 WHEEL_R = 0.03
 
@@ -50,7 +52,8 @@ class Sphero(Robot):
             self.motors.append(m)
         self.maxVelocity = int(self.motors[0].getMaxVelocity())
 
-        self.detector = ObstacleDetection()
+        self.obstacle_detector = ObstacleDetection()
+        # self.cat_detector = ObjectDetection()
         self.pathplanner = PathPlanner(*self.imageShape, debug=True)
 
     def sleep(self, ms):
@@ -354,10 +357,24 @@ class Sphero(Robot):
             frame_time = time.time()
 
             if last_frame_time + fps < frame_time:
-                img = self.detector.detect(self.getImage(), draw=True)
-                next_direction = self.pathplanner.next_direction(img)
+                gyro = self.getGyroValues()
+                image = self.getImage()
+                state = self.pathplanner.current_state.state
+                vision_image = None
+
+                if state == State.FLEE:
+                    vision_image = self.obstacle_detector.detect(
+                        image, draw=True)
+                # elif state == State.SEARCH_CAT:
+                #     vision_image = self.cat_detector.show_inference(image)
+
+                next_direction = self.pathplanner.next_direction(
+                    gyro, vision_image, image)
+                state = self.pathplanner.current_state.state
+
                 last_frame_time = frame_time
 
+            print("State: ", state)
             self.next_move(next_direction)
 
 
