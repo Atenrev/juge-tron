@@ -1,11 +1,10 @@
 from controller import Robot
 from cmath import rect, polar
 import numpy as np
-import cv2
 import struct
 import time
-from visio.obstacle_detection import ObstacleDetection
-from visio.custom_detection import ObjectDetection
+from obstacle_detection import ObstacleDetection
+from custom_detection import ObjectDetection
 from pathplanner import PathPlanner, State
 
 SPHERE_R = 0.5
