@@ -169,7 +169,6 @@ class Sphero(Robot):
         self.velocity = vel
 
         self.setVelocity()
-        self.stabilize()
         print([m1, m2], r, rad * 180 / np.pi)
 
     def substract_polar(self, v1, v2):
@@ -180,10 +179,7 @@ class Sphero(Robot):
         return polar(v3)
 
     def stabilize(self):
-        mag = np.linalg.norm(self.getGyroValues())
-        if mag > 3:
-            print("Stabilization")
-            self.stop()
+        self.stop()
 
     def forward(self, speed=None, cameraLock=False):
         '''

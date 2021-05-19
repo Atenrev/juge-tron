@@ -4,7 +4,8 @@ simulationViewPerspectives: 000000ff000000010000000200000180000005fe010000000201
 sceneTreePerspectives: 000000ff0000000100000002000000c0000000fa0100000002010000000200
 maximizedDockId: -1
 centralWidgetVisible: 1
-orthographicViewHeight: 1
+projectionMode: PERSPECTIVE
+orthographicViewHeight: 4.04774
 textFiles: -1
 globalOptionalRendering: CameraFrustums
 consoles: Console:All:All
