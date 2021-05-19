@@ -6,7 +6,9 @@
                 "${workspaceFolder}/**",
                 "C:/Program Files/Webots/include/**",
                 "C:/Program Files/Webots/msys64/mingw64//include/**",
-                "C:/Program Files/Webots/msys64/mingw64/x86_64-w64-mingw32/include/**"
+                "C:/Program Files/Webots/msys64/mingw64/x86_64-w64-mingw32/include/**",
+                "D:/sdk/boost/**",
+                "C:/Program Files/Python39/include/**"
             ],
             "defines": [
                 "_DEBUG",
