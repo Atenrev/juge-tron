@@ -1,0 +1,1409 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "Sample of how the indoor objects can be placed"
+  ]
+  physics "spherePhysics"
+  basicTimeStep 16
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.4382789360355156 -0.7017298666735148 -0.5616820884147433 2.139660088377445
+  position 4.067859555859414 4.228991039681352 2.967131555556212
+  exposure 0.5
+  follow "robot"
+}
+TexturedBackground {
+  texture "empty_office"
+  skybox FALSE
+  skyColor [
+    0.2 0.2 0.2
+  ]
+}
+Group {
+  children [
+    DEF FLOOR Solid {
+      translation 3.3 0 4.95
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0.117647
+            roughness 1
+            metalness 0
+            IBLStrength 0
+            normalMapFactor 0
+            occlusionMapStrength 0
+            emissiveIntensity 0
+          }
+          geometry DEF FLOOR_PLANE Plane {
+            size 6.6 9.9
+          }
+        }
+      ]
+      name "floor"
+      boundingObject USE FLOOR_PLANE
+      locked TRUE
+    }
+    DEF ROOF Solid {
+      translation 3.3 2.4 4.95
+      rotation 1 0 0 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.8 0.8 0.8
+            baseColorMap ImageTexture {
+              url [
+                "textures/roughcast.jpg"
+              ]
+            }
+            roughness 0.5
+            metalness 0
+            textureTransform TextureTransform {
+              scale 8 8
+            }
+          }
+          geometry USE FLOOR_PLANE
+        }
+      ]
+      name "roof"
+      boundingObject USE FLOOR_PLANE
+      locked TRUE
+    }
+    Wall {
+      translation 0.65 0 0
+      name "wall 1"
+      size 1 2.4 0.3
+    }
+    Window {
+      translation 1.65 0 0
+      name "window 1"
+      size 1 2.4 0.3
+      frameAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+    }
+    Wall {
+      translation 4.3 0 0
+      name "wall 2"
+      size 4.3 2.4 0.3
+    }
+    Wall {
+      translation 2.3 0 9.9
+      name "wall 3"
+      size 4.3 2.4 0.3
+    }
+    Wall {
+      translation 5.95 0 9.9
+      name "wall 4"
+      size 1 2.4 0.3
+    }
+    Door {
+      translation 4.95 0 9.9
+      rotation 0 1 0 3.14159
+      name "door 1"
+      size 1 2.4 0.3
+      canBeOpen FALSE
+      frameAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+      doorHandle DoorLever {
+        hasStaticParent TRUE
+      }
+    }
+    Wall {
+      translation 0 0 3.8
+      rotation 0 1 0 1.5708
+      name "wall 5"
+      size 7.9 2.4 0.3
+    }
+    Wall {
+      translation 0 0 9.4
+      rotation 0 1 0 1.5708
+      name "wall 6"
+      size 1.3 2.4 0.3
+    }
+    Window {
+      translation 0 0 8.25
+      rotation 0 1 0 1.5708
+      name "window 2"
+      size 1 2.4 0.3
+      frameAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+    }
+    Wall {
+      translation 6.6 0 9.4
+      rotation 0 1 0 1.5708
+      name "wall 7"
+      size 1.3 2.4 0.3
+    }
+    Door {
+      translation 6.6 0 8.25
+      rotation 0 1 0 -1.5708
+      name "door 2"
+      size 1 2.4 0.3
+      canBeOpen FALSE
+      frameAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+      doorHandle DoorLever {
+        rotation -0.0012868889344011497 0.9999991719580925 0 0
+        hasStaticParent TRUE
+      }
+    }
+    Wall {
+      translation 6.6 0 3.8
+      rotation 0 1 0 1.5708
+      name "wall 8"
+      size 7.9 2.4 0.3
+    }
+    Wall {
+      translation 1.8 0 3.3
+      name "wall 9"
+      size 3.3 2.4 0.3
+    }
+    CeilingLight {
+      translation 2.47061 2.4 1.3341
+      name "ceiling light 1"
+      pointLightIntensity 5
+    }
+    CeilingLight {
+      translation 2.44317 2.4 7.10107
+      name "ceiling light 2"
+      pointLightIntensity 8
+    }
+    FloorLight {
+      translation 0.745582 0 4.00427
+      pointLightIntensity 2
+    }
+    Fridge {
+      translation 0.5 0 0.52
+      mainColor 0.6666666666666666 0 0
+    }
+    Cabinet {
+      translation 0.15 0 1.31
+      rotation 0 1 0 1.5708
+      name "cabinet 1"
+      depth 0.68
+      outerThickness 0.02
+      rowsHeights [
+        0.22, 0.21, 0.21
+      ]
+      columnsWidths [
+        0.42, 0.42
+      ]
+      layout [
+        "Drawer (1, 1, 1, 1, 1.5)"
+        "Drawer (1, 2, 1, 1, 1.5)"
+        "Drawer (1, 3, 1, 1, 1.5)"
+        "Shelf  (1, 2, 2, 0)"
+        "Shelf  (1, 3, 2, 0)"
+        "Shelf (1, 1, 0, 3)"
+      ]
+      handle CabinetHandle {
+        handleLength 0.09
+        handleRadius 0.008
+      }
+      primaryAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+      secondaryAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+    }
+    Cabinet {
+      translation 0.150001 1.12 1.31
+      rotation 0 -1 0 4.71239
+      name "cabinet 2"
+      outerThickness 0.02
+      rowsHeights [
+        0.22, 0.21, 0.21
+      ]
+      columnsWidths [
+        0.42, 0.42
+      ]
+      layout [
+        "RightSidedDoor (1, 1, 1, 3, 1.5)"
+        "LeftSidedDoor (2, 1, 1, 3, 1.5)"
+        "Shelf  (1, 2, 2, 0)"
+        "Shelf  (1, 3, 2, 0)"
+        "Shelf (1, 1, 0, 3)"
+      ]
+      handle CabinetHandle {
+        translation -0.2 0 0
+        handleLength 0.09
+        handleRadius 0.008
+      }
+      primaryAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+      secondaryAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+    }
+    Cabinet {
+      translation 0.15 0 2.19
+      rotation 0 -1 0 4.71239
+      name "cabinet 3"
+      depth 0.68
+      outerThickness 0.02
+      rowsHeights [
+        0.22, 0.21, 0.21
+      ]
+      columnsWidths [
+        0.42, 0.42
+      ]
+      layout [
+        "LeftSidedDoor (2, 1, 1, 3, 1.5)"
+        "Shelf  (1, 2, 2, 0)"
+        "Shelf  (1, 3, 2, 0)"
+        "Shelf (1, 1, 0, 3)"
+      ]
+      handle CabinetHandle {
+        translation 0.2 0 0
+        handleLength 0.09
+        handleRadius 0.008
+      }
+      primaryAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+      secondaryAppearance PaintedWood {
+        colorOverride 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      }
+    }
+    Oven {
+      translation 0.58 0.34 2.85
+    }
+    Worktop {
+      translation 0.5 0.71 1.31
+      rotation 0 1 0 1.5708
+      name "worktop 1"
+      size 0.88 0.06 0.7
+    }
+    Worktop {
+      translation 0.807 0.71 1.97
+      rotation 0 1 0 1.5708
+      name "worktop 2"
+      size 0.44 0.06 0.086
+    }
+    Worktop {
+      translation 0.272 0.71 1.97
+      rotation 0 1 0 1.5708
+      name "worktop 3"
+      size 0.44 0.06 0.244
+    }
+    Worktop {
+      translation 0.5 0.71 2.63
+      rotation 0 1 0 1.5708
+      name "worktop 4"
+      size 0.88 0.06 0.7
+    }
+    Sink {
+      translation 0.48 0.715 1.97
+      rotation 0 1 0 4.71239
+    }
+    HotPlate {
+      translation 0.5 0.71 2.85
+      rotation 0 1 0 4.71239
+    }
+    Can {
+      translation 0.632793 0.841066 0.566328
+      name "can 1"
+    }
+    Table {
+      translation 4.94438 0 1.07424
+      rotation 0 1 0 1.5708
+      name "table(1)"
+    }
+    Chair {
+      translation 5.41278 -0.00224453 1.46063
+      rotation 0 1 0 3.1415
+      name "chair 1"
+      color 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      physics Physics {
+        centerOfMass [
+          0 0.45 0
+        ]
+      }
+    }
+    Chair {
+      translation 4.44435 -0.00224453 0.642495
+      name "chair 2"
+      color 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      physics Physics {
+        centerOfMass [
+          0 0.45 0
+        ]
+      }
+    }
+    Chair {
+      translation 4.48748 -0.00224453 1.39428
+      name "chair 3"
+      color 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      physics Physics {
+        centerOfMass [
+          0 0.45 0
+        ]
+      }
+    }
+    Chair {
+      translation 5.38086 -0.00224453 0.706899
+      rotation 0 1 0 3.1415
+      name "chair 4"
+      color 0.13333333333333333 0.13333333333333333 0.13333333333333333
+      physics Physics {
+        centerOfMass [
+          0 0.45 0
+        ]
+      }
+    }
+    FruitBowl {
+      translation 4.88063 0.739784 0.715471
+      rotation 0 -1 0 0.944615
+      color 0.6666666666666666 0 0
+    }
+    Orange {
+      translation 4.86999 0.799671 0.775472
+    }
+    Orange {
+      translation 4.80474 0.799666 0.699693
+      name "orange 2"
+    }
+    Apple {
+      translation 4.95672 0.799667 0.722921
+    }
+    Apple {
+      translation 4.89356 0.79966 0.635999
+      name "apple 2"
+    }
+    Desk {
+      translation 0.512574 0 5.12497
+      rotation 0 1 0 1.5708
+    }
+    WoodenChair {
+      translation 0.9 0 5.15
+      rotation 0 1 0 -1.5708
+      physics Physics {
+        centerOfMass [
+          0 0.45 0
+        ]
+      }
+    }
+    Book {
+      translation 0.592219 0.719882 4.69758
+      rotation -0.739498435679699 0.4760232804518164 0.4759662804182345 1.86814
+      name "book(1)"
+    }
+    Table {
+      translation 2.55544 0.02 7.16302
+      size 1.2 0.53 0.8
+    }
+    Armchair {
+      translation 3.82671 0 5.8922
+      rotation 0 -1 0 2.30591
+      color 0.13333333333333333 0.13333333333333333 0.13333333333333333
+    }
+    Sofa {
+      translation 0.804228 0 7.05325
+      color 0.13333333333333333 0.13333333333333333 0.13333333333333333
+    }
+    Sofa {
+      translation 2.49729 0 8.95734
+      rotation 0 1 0 1.5708
+      name "sofa 2"
+      color 0.13333333333333333 0.13333333333333333 0.13333333333333333
+    }
+    BunchOfSunFlowers {
+      translation 3.9144 0 9.05979
+    }
+    Book {
+      translation 0.596131 0.739852 4.69173
+      rotation -0.9368443856042915 0.2473451018070175 0.24727110177655914 1.63607
+    }
+    Can {
+      translation 2.74188 0.611066 7.22627
+      rotation 0 -1 0 1.29491
+      name "can 2"
+    }
+    Can {
+      translation 2.7233 0.611066 7.34994
+      name "can 3"
+    }
+    Can {
+      translation 2.8744 0.611066 7.20688
+      rotation 0 1 0 1.32183
+      name "can 4"
+    }
+    Book {
+      translation 6.15092 1.52924 3.02231
+      rotation -1 0 0 0.248684
+      name "book 2"
+    }
+    Book {
+      translation 6.15759 1.529 3.04469
+      rotation -1 0 0 0.265428
+      name "book 3"
+    }
+    Book {
+      translation 6.16417 1.52878 3.06681
+      rotation -1 0 0 0.27868
+      name "book 4"
+    }
+    Book {
+      translation 6.15821 1.52813 3.0912
+      rotation -1 0 0 0.311718
+      name "book 5"
+    }
+    Book {
+      translation 6.16234 1.52779 3.11388
+      rotation -1 0 0 0.326714
+      name "book 6"
+    }
+    PottedTree {
+      translation 6.08049 0 4.51701
+    }
+    PortraitPainting {
+      translation 2.47 1.6 9.73
+      rotation 0 1 0 3.14159
+    }
+    LandscapePainting {
+      translation 4.92523 1.62868 0.184484
+    }
+  ]
+}
+Robot {
+  translation 4.21 0.1 2.95
+  children [
+    DEF Controller Solid {
+      children [
+        BallJoint {
+          jointParameters BallJointParameters {
+            staticFriction 0.01
+          }
+          jointParameters2 JointParameters {
+            staticFriction 0.01
+          }
+          jointParameters3 JointParameters {
+            axis 0 1 0
+            staticFriction 0.01
+          }
+          endPoint DEF Sphero Solid {
+            rotation -0.6973120574678279 0.20903705830780694 0.6856087825896073 5.287399392217639
+            children [
+              DEF HolllowSphere Shape {
+                appearance PBRAppearance {
+                  transparency 0.9
+                  metalness 0
+                }
+                geometry Sphere {
+                  radius 0.1
+                  subdivision 2
+                }
+              }
+            ]
+            name "solid(1)"
+            contactMaterial "sphere"
+            boundingObject USE HolllowSphere
+            physics Physics {
+              density -1
+              mass 0.05
+            }
+          }
+        }
+        DEF wheel0HJ HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 0 0 -1
+            anchor 0.09100000000000001 0 0
+          }
+          device [
+            RotationalMotor {
+              name "wheel0"
+              maxVelocity 200
+            }
+          ]
+          endPoint DEF wheel0Solid Solid {
+            translation 0.09100000000000001 0 0
+            rotation 1 -5.890192445936231e-16 1.570717985582995e-16 1.570000000000001
+            children [
+              Group {
+                children [
+                  DEF sr00 Solid {
+                    translation 0.007000000000000001 0 0
+                    rotation -2.9236047887014025e-49 1.256447388198122e-34 -1 6.283185307179586
+                    children [
+                      DEF r0 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          DEF SMALL_WHEEL_SHAPE Shape {
+                            appearance PBRAppearance {
+                              baseColor 1 0.5 0.5
+                              roughness 1
+                            }
+                            geometry Cylinder {
+                              height 0.002
+                              radius 0.001
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                    name "sr00"
+                    contactMaterial "wheel"
+                    boundingObject USE r0
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr01 Solid {
+                    translation 0.006062177826491072 0 0.0034999999999999996
+                    rotation -9.31641499045287e-15 1 3.3529040280388807e-14 5.7595865315813
+                    children [
+                      DEF r1 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr01"
+                    contactMaterial "wheel"
+                    boundingObject USE r1
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr02 Solid {
+                    translation 0.0035000000000000014 0 0.006062177826491071
+                    rotation -1.620925615952744e-14 1 2.7366997557010516e-14 5.235987755983
+                    children [
+                      DEF r2 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr02"
+                    contactMaterial "wheel"
+                    boundingObject USE r2
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr03 Solid {
+                    translation 4.286263797015737e-19 0 0.007000000000000001
+                    rotation -1.823504127604383e-14 1 1.8296483682599398e-14 4.712388980384693
+                    children [
+                      DEF r3 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr03"
+                    contactMaterial "wheel"
+                    boundingObject USE r3
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr04 Solid {
+                    translation -0.003499999999999999 0 0.006062177826491072
+                    rotation -1.6056738431302777e-14 1 9.290313478590603e-15 4.188790204786395
+                    children [
+                      DEF r4 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr04"
+                    contactMaterial "wheel"
+                    boundingObject USE r4
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr05 Solid {
+                    translation -0.00606217782649107 0 0.0035000000000000027
+                    rotation -9.367058757075123e-15 1 2.557611571187192e-15 3.665191429188093
+                    children [
+                      DEF r5 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr05"
+                    contactMaterial "wheel"
+                    boundingObject USE r5
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr06 Solid {
+                    translation -0.007000000000000001 0 8.572527594031474e-19
+                    rotation -3.608224830031759e-16 1 -9.746148840128565e-19 3.141592653589793
+                    children [
+                      DEF r6 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr06"
+                    contactMaterial "wheel"
+                    boundingObject USE r6
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr07 Solid {
+                    translation -0.006062177826491073 0 -0.0034999999999999983
+                    rotation 8.893385412459552e-15 0.9999999999999999 2.2736320541546435e-15 2.617993877991493
+                    children [
+                      DEF r7 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr07"
+                    contactMaterial "wheel"
+                    boundingObject USE r7
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr08 Solid {
+                    translation -0.003500000000000003 0 -0.00606217782649107
+                    rotation 1.5636090343656377e-14 1 8.981838214316576e-15 2.09439510239319
+                    children [
+                      DEF r8 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr08"
+                    contactMaterial "wheel"
+                    boundingObject USE r8
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr09 Solid {
+                    translation -1.2858791391047211e-18 0 -0.007000000000000001
+                    rotation 1.818150005391682e-14 1 1.824741829326554e-14 1.5707963267948917
+                    children [
+                      DEF r9 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr09"
+                    contactMaterial "wheel"
+                    boundingObject USE r9
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr010 Solid {
+                    translation 0.0034999999999999957 0 -0.0060621778264910746
+                    rotation 1.5343629145015244e-14 1 2.7467611518617335e-14 1.0471975511965792
+                    children [
+                      DEF r10 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr010"
+                    contactMaterial "wheel"
+                    boundingObject USE r10
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr011 Solid {
+                    translation 0.006062177826491069 0 -0.003500000000000003
+                    rotation 7.02501256249528e-15 1 3.1048293447049806e-14 0.5235987755982833
+                    children [
+                      DEF r11 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr011"
+                    contactMaterial "wheel"
+                    boundingObject USE r11
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                ]
+              }
+              DEF wheelShape Shape {
+                appearance PBRAppearance {
+                }
+                geometry DEF WheelGeo Cylinder {
+                  height 0.002
+                  radius 0.006
+                }
+              }
+            ]
+            name "wheel0"
+            contactMaterial "wheel"
+            boundingObject USE WheelGeo
+            physics Physics {
+              density -1
+              mass 0.05
+            }
+          }
+        }
+        DEF wheel1HJ HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 1.5 0 0.866025
+            anchor -0.045500000000000006 0 0.0788084
+          }
+          device [
+            RotationalMotor {
+              name "wheel1"
+              maxVelocity 200
+            }
+          ]
+          endPoint DEF wheel1Solid Solid {
+            translation -0.045500000000000006 0 0.0788084
+            rotation 0.7744730964629543 0.44714205569288734 -0.4474990557373527 1.8228553071795845
+            children [
+              DEF wheelShape Shape {
+                appearance PBRAppearance {
+                }
+                geometry DEF WheelGeo Cylinder {
+                  height 0.002
+                  radius 0.006
+                }
+              }
+              Group {
+                children [
+                  DEF sr10 Solid {
+                    translation 0.007000000000000001 0 0
+                    rotation -2.9236047887014025e-49 1.256447388198122e-34 -1 6.283185307179586
+                    children [
+                      DEF r0 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          DEF SMALL_WHEEL_SHAPE Shape {
+                            appearance PBRAppearance {
+                              baseColor 1 0.5 0.5
+                              roughness 1
+                            }
+                            geometry Cylinder {
+                              height 0.002
+                              radius 0.001
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                    name "sr10"
+                    contactMaterial "wheel"
+                    boundingObject USE r0
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr11 Solid {
+                    translation 0.006062177826491072 0 0.0034999999999999996
+                    rotation -9.31641499045287e-15 1 3.3529040280388807e-14 5.7595865315813
+                    children [
+                      DEF r1 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr11"
+                    contactMaterial "wheel"
+                    boundingObject USE r1
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr12 Solid {
+                    translation 0.0035000000000000014 0 0.006062177826491071
+                    rotation -1.620925615952744e-14 1 2.7366997557010516e-14 5.235987755983
+                    children [
+                      DEF r2 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr12"
+                    contactMaterial "wheel"
+                    boundingObject USE r2
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr13 Solid {
+                    translation 4.286263797015737e-19 0 0.007000000000000001
+                    rotation -1.823504127604383e-14 1 1.8296483682599398e-14 4.712388980384693
+                    children [
+                      DEF r3 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr13"
+                    contactMaterial "wheel"
+                    boundingObject USE r3
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr14 Solid {
+                    translation -0.003499999999999999 0 0.006062177826491072
+                    rotation -1.6056738431302777e-14 1 9.290313478590603e-15 4.188790204786395
+                    children [
+                      DEF r4 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr14"
+                    contactMaterial "wheel"
+                    boundingObject USE r4
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr15 Solid {
+                    translation -0.00606217782649107 0 0.0035000000000000027
+                    rotation -9.367058757075123e-15 1 2.557611571187192e-15 3.665191429188093
+                    children [
+                      DEF r5 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr15"
+                    contactMaterial "wheel"
+                    boundingObject USE r5
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr16 Solid {
+                    translation -0.007000000000000001 0 8.572527594031474e-19
+                    rotation -3.608224830031759e-16 1 -9.746148840128565e-19 3.141592653589793
+                    children [
+                      DEF r6 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr16"
+                    contactMaterial "wheel"
+                    boundingObject USE r6
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr17 Solid {
+                    translation -0.006062177826491073 0 -0.0034999999999999983
+                    rotation 8.893385412459552e-15 0.9999999999999999 2.2736320541546435e-15 2.617993877991493
+                    children [
+                      DEF r7 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr17"
+                    contactMaterial "wheel"
+                    boundingObject USE r7
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr18 Solid {
+                    translation -0.003500000000000003 0 -0.00606217782649107
+                    rotation 1.5636090343656377e-14 1 8.981838214316576e-15 2.09439510239319
+                    children [
+                      DEF r8 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr18"
+                    contactMaterial "wheel"
+                    boundingObject USE r8
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr19 Solid {
+                    translation -1.2858791391047211e-18 0 -0.007000000000000001
+                    rotation 1.818150005391682e-14 1 1.824741829326554e-14 1.5707963267948917
+                    children [
+                      DEF r9 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr19"
+                    contactMaterial "wheel"
+                    boundingObject USE r9
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr110 Solid {
+                    translation 0.0034999999999999957 0 -0.0060621778264910746
+                    rotation 1.5343629145015244e-14 1 2.7467611518617335e-14 1.0471975511965792
+                    children [
+                      DEF r10 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr110"
+                    contactMaterial "wheel"
+                    boundingObject USE r10
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr111 Solid {
+                    translation 0.006062177826491069 0 -0.003500000000000003
+                    rotation 7.02501256249528e-15 1 3.1048293447049806e-14 0.5235987755982833
+                    children [
+                      DEF r11 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr111"
+                    contactMaterial "wheel"
+                    boundingObject USE r11
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                ]
+              }
+            ]
+            name "wheel1"
+            contactMaterial "wheel"
+            boundingObject DEF WheelGeo Cylinder {
+              height 0.002
+              radius 0.006
+            }
+            physics Physics {
+              density -1
+              mass 0.05
+            }
+          }
+        }
+        DEF wheel2HJ HingeJoint {
+          jointParameters HingeJointParameters {
+            axis -1.5 0 0.866025
+            anchor -0.045500000000000006 0 -0.0788084
+          }
+          device [
+            RotationalMotor {
+              name "wheel2"
+              acceleration 1
+              maxVelocity 200
+            }
+          ]
+          endPoint DEF wheel2Solid Solid {
+            translation -0.045500000000000006 0 -0.0788084
+            rotation 0.7744730964629541 -0.44714205569288673 0.44749905573735355 1.82286
+            children [
+              DEF wheelShape Shape {
+                appearance PBRAppearance {
+                }
+                geometry DEF WheelGeo Cylinder {
+                  height 0.002
+                  radius 0.006
+                }
+              }
+              Group {
+                children [
+                  DEF sr20 Solid {
+                    translation 0.007000000000000001 0 0
+                    rotation -2.9236047887014025e-49 1.256447388198122e-34 -1 6.283185307179586
+                    children [
+                      DEF r0 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          DEF SMALL_WHEEL_SHAPE Shape {
+                            appearance PBRAppearance {
+                              baseColor 1 0.5 0.5
+                              roughness 1
+                            }
+                            geometry Cylinder {
+                              height 0.002
+                              radius 0.001
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                    name "sr20"
+                    contactMaterial "wheel"
+                    boundingObject USE r0
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr21 Solid {
+                    translation 0.006062177826491072 0 0.0034999999999999996
+                    rotation -9.31641499045287e-15 1 3.3529040280388807e-14 5.7595865315813
+                    children [
+                      DEF r1 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr21"
+                    contactMaterial "wheel"
+                    boundingObject USE r1
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr22 Solid {
+                    translation 0.0035000000000000014 0 0.006062177826491071
+                    rotation -1.620925615952744e-14 1 2.7366997557010516e-14 5.235987755983
+                    children [
+                      DEF r2 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr22"
+                    contactMaterial "wheel"
+                    boundingObject USE r2
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr23 Solid {
+                    translation 4.286263797015737e-19 0 0.007000000000000001
+                    rotation -1.823504127604383e-14 1 1.8296483682599398e-14 4.712388980384693
+                    children [
+                      DEF r3 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr23"
+                    contactMaterial "wheel"
+                    boundingObject USE r3
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr24 Solid {
+                    translation -0.003499999999999999 0 0.006062177826491072
+                    rotation -1.6056738431302777e-14 1 9.290313478590603e-15 4.188790204786395
+                    children [
+                      DEF r4 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr24"
+                    contactMaterial "wheel"
+                    boundingObject USE r4
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr25 Solid {
+                    translation -0.00606217782649107 0 0.0035000000000000027
+                    rotation -9.367058757075123e-15 1 2.557611571187192e-15 3.665191429188093
+                    children [
+                      DEF r5 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr25"
+                    contactMaterial "wheel"
+                    boundingObject USE r5
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr26 Solid {
+                    translation -0.007000000000000001 0 8.572527594031474e-19
+                    rotation -3.608224830031759e-16 1 -9.746148840128565e-19 3.141592653589793
+                    children [
+                      DEF r6 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr26"
+                    contactMaterial "wheel"
+                    boundingObject USE r6
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr27 Solid {
+                    translation -0.006062177826491073 0 -0.0034999999999999983
+                    rotation 8.893385412459552e-15 0.9999999999999999 2.2736320541546435e-15 2.617993877991493
+                    children [
+                      DEF r7 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr27"
+                    contactMaterial "wheel"
+                    boundingObject USE r7
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr28 Solid {
+                    translation -0.003500000000000003 0 -0.00606217782649107
+                    rotation 1.5636090343656377e-14 1 8.981838214316576e-15 2.09439510239319
+                    children [
+                      DEF r8 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr28"
+                    contactMaterial "wheel"
+                    boundingObject USE r8
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr29 Solid {
+                    translation -1.2858791391047211e-18 0 -0.007000000000000001
+                    rotation 1.818150005391682e-14 1 1.824741829326554e-14 1.5707963267948917
+                    children [
+                      DEF r9 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr29"
+                    contactMaterial "wheel"
+                    boundingObject USE r9
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr210 Solid {
+                    translation 0.0034999999999999957 0 -0.0060621778264910746
+                    rotation 1.5343629145015244e-14 1 2.7467611518617335e-14 1.0471975511965792
+                    children [
+                      DEF r10 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr210"
+                    contactMaterial "wheel"
+                    boundingObject USE r10
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                  DEF sr211 Solid {
+                    translation 0.006062177826491069 0 -0.003500000000000003
+                    rotation 7.02501256249528e-15 1 3.1048293447049806e-14 0.5235987755982833
+                    children [
+                      DEF r11 Transform {
+                        rotation 1 0 0 1.5708
+                        children [
+                          USE SMALL_WHEEL_SHAPE
+                        ]
+                      }
+                    ]
+                    name "sr211"
+                    contactMaterial "wheel"
+                    boundingObject USE r11
+                    physics Physics {
+                      density -1
+                      mass 0.003
+                    }
+                  }
+                ]
+              }
+            ]
+            name "wheel2"
+            contactMaterial "wheel"
+            boundingObject DEF WheelGeo Cylinder {
+              height 0.002
+              radius 0.006
+            }
+            physics Physics {
+              density -1
+              mass 0.05
+            }
+          }
+        }
+        DEF CenterOfMass Transform {
+          translation 0 -0.05 0
+          children [
+            DEF BodyShape Shape {
+              appearance PBRAppearance {
+              }
+              geometry DEF BodyGeo Cylinder {
+                height 0.02
+                radius 0.04
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject USE CenterOfMass
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    Accelerometer {
+      resolution 0.1
+    }
+    Pen {
+      inkColor 1 1 1
+      inkDensity 1
+    }
+    Gyro {
+      resolution 0.1
+    }
+    Receiver {
+    }
+    Emitter {
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+      }
+      device [
+        RotationalMotor {
+          name "cameraMotor"
+        }
+      ]
+      endPoint Camera {
+        translation 0 0.06 0
+        rotation 0 -1 0 1.5708
+        children [
+          DEF Dummy Solid {
+          }
+        ]
+        locked TRUE
+        fieldOfView 1
+        width 256
+        height 256
+        antiAliasing TRUE
+        lens Lens {
+        }
+      }
+    }
+  ]
+  contactMaterial "robot"
+  boundingObject USE CenterOfMass
+  physics Physics {
+    density -1
+    mass 0.5
+  }
+  controller "<extern>"
+}

@@ -1,0 +1,23 @@
+#VRML_OBJ R2021a utf8
+DEF FLOOR Solid {
+  translation 3.3 0 4.95
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.447059 0.239216 0.0666667
+        roughness 1
+        metalness 0
+        IBLStrength 0
+        normalMapFactor 0
+        occlusionMapStrength 0
+        emissiveIntensity 0
+      }
+      geometry DEF FLOOR_PLANE Plane {
+        size 6.6 9.9
+      }
+    }
+  ]
+  name "floor"
+  boundingObject USE FLOOR_PLANE
+  locked TRUE
+}

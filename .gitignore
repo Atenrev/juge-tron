@@ -1,0 +1,9 @@
+*.avi
+*.d
+*.o
+*.pyc
+*.dll
+*.zip
+*.rar
+*.7z
+backup
