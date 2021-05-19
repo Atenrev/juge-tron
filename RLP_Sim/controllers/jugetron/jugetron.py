@@ -3,8 +3,8 @@ from cmath import rect, polar
 import numpy as np
 import struct
 import time
-from obstacle_detection import ObstacleDetection
-from custom_detection import ObjectDetection
+from visio.obstacle_detection import ObstacleDetection
+from visio.custom_detection import ObjectDetection
 from pathplanner import PathPlanner, State
 
 SPHERE_R = 0.5
@@ -365,7 +365,6 @@ class Sphero(Robot):
                     fps = 1
                     vision_image = self.cat_detector.show_inference_and_return(
                         image)
-                    print("XXXXXXXXXXXXXXXXXXXXXX", vision_image)
                 else:
                     fps = 1 / 10
                     vision_image = self.obstacle_detector.detect(

@@ -19,7 +19,8 @@ pip install tf_slim
 ```
 3. Dirigirse a la carpeta "/Reconocimiento de imágenes" y ejecutar los siguientes comandos:
 ``` powershell
-protoc research/object_detection/protos/*.proto --python_out=.
-pip install research
+cd research/
+protoc object_detection/protos/*.proto --python_out=.
+pip install .
 ```
 4. Abrir haciendo doble click uno de los escenarios presentes en /RLP_Sim/worlds
