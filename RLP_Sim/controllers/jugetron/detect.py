@@ -74,8 +74,8 @@ class Yolo:
                         c = int(cls)  # integer class
                         if self.names[c] == 'cat':
                             cat = True
-                            label = f'{self.names[c]} {conf:.2f}'
-                            plot_one_box(xyxy, im0, label=label)
+                        label = f'{self.names[c]} {conf:.2f}'
+                        plot_one_box(xyxy, im0, label=label)
 
             # Stream results
             if self.view_img:
