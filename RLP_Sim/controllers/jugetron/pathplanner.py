@@ -1,9 +1,7 @@
 from __future__ import annotations
 from enum import Enum
 import time
-import cv2
 import numpy as np
-from scipy.special import expit
 
 
 class State(Enum):
