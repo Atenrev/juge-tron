@@ -20,15 +20,7 @@ class ObjectDetection:
         self.model = self.load_model()
 
     def load_model(self):
-        model_name = 'ssd_mobilenet_v1_coco_2017_11_17'
-        model_file = model_name + '.tar.gz'
-        model_dir = tf.keras.utils.get_file(
-            fname=model_name,
-            origin='./' + model_file,
-            untar=True
-        )
-        model_dir = pathlib.Path(model_dir)/"saved_model"
-        model = tf.saved_model.load(str(model_dir))
+        model = tf.saved_model.load(".\saved_model")
         return model
 
     def run_inference_for_single_image(self, image):
