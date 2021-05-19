@@ -7,8 +7,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.621832109650553 0.547729162458497 0.559747793206955 4.23485623645882
-  position 2.084752091490656 10.7726910151431 1.7341075227721912
+  orientation 0.5852759984554324 0.5641860746505198 0.5823624977644379 4.173208299012623
+  position 2.036623472945655 7.528228571537516 1.7186310146701325
   follow "robot"
 }
 TexturedBackground {
@@ -2181,5 +2181,5 @@ DEF Jugetron Robot {
     density -1
     mass 0.5
   }
-  controller "Sphero"
+  controller "jugetron"
 }
