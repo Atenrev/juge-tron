@@ -9,7 +9,9 @@ Abans de fer servir el mòdul de visió, s'han d'instal·lar les següents llibr
 I s'han d'executar aquestes comandes
 
 %%bash
-protoc research/object_detection/protos/*.proto --python_out=.
+cd research/
+protoc object_detection/protos/*.proto --python_out=.
 
 %%bash 
-pip install research
+cd research/
+pip install .
