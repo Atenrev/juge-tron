@@ -6,9 +6,10 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.5852759984554324 0.5641860746505198 0.5823624977644379 4.173208299012623
-  position 2.036623472945655 7.528228571537516 1.7186310146701325
-  follow "robot"
+  orientation 0.10724709095406094 0.9891405325362632 0.1004941211005351 4.766479926578251
+  position 0.9180320589701434 0.4780029280896716 2.2108791060347612
+  follow "robot:camera:solid"
+  followType "Mounted Shot"
 }
 TexturedBackground {
   luminosity 2
@@ -908,16 +909,21 @@ DEF Cat Robot {
             Shape {
               appearance Appearance {
                 material Material {
+                  ambientIntensity 1
+                  diffuseColor 1 1 1
+                  emissiveColor 1 1 1
+                  shininess 1
+                  specularColor 1 1 1
                 }
                 texture ImageTexture {
                   url [
-                    "D:/Sources/RLP_Project/RLP_Sim/protos/cat/Cat_bump.jpg"
+                    "D:/UAB/3r/RLP/Pràctica/juge-tron/RLP_Sim/protos/cat/Cat_diffuse.jpg"
                   ]
                 }
               }
               geometry Mesh {
                 url [
-                  "D:/Sources/RLP_Project/RLP_Sim/protos/cat/cat.obj"
+                  "D:/UAB/3r/RLP/Pràctica/juge-tron/RLP_Sim/protos/cat/cat.obj"
                 ]
               }
             }
@@ -1245,7 +1251,7 @@ DEF Cat Robot {
   controller "create_avoid_obstacles"
 }
 DEF Jugetron Robot {
-  translation 1.9 0.1 1.75
+  translation 1.9 0.1 2.12
   rotation 1 0 0 0
   children [
     DEF Controller Solid {
@@ -1262,7 +1268,7 @@ DEF Jugetron Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation -0.34684877869953645 -0.9351517140561155 0.07202219388875376 3.207928548485199
+            rotation -0.005474962699079313 0.7782059918176266 0.6279852379495777 2.876353752307031
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {
@@ -2133,7 +2139,6 @@ DEF Jugetron Robot {
       }
     }
     Accelerometer {
-      yAxis FALSE
       resolution 0.1
     }
     Pen {
@@ -2141,7 +2146,6 @@ DEF Jugetron Robot {
       inkDensity 1
     }
     Gyro {
-      yAxis FALSE
       resolution 0.1
     }
     Receiver {

@@ -93,7 +93,7 @@ class ObjectDetection:
         # Final filter to consider only these boxes with an acceptable score
         boxes = []
         for i in range(len(output_dict['detection_boxes'])):
-            if output_dict['detection_scores'][i] > 0.2:
+            if output_dict['detection_scores'][i] > 0.05:
                 boxes.append(output_dict['detection_boxes'][i])
         
         return boxes

@@ -8,10 +8,11 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.577674387267529 0.5774179113313579 0.5769582809604322 4.18996628362677
-  position 1.9423342743182994 8.812111654585754 1.6235253619852128
+  orientation 0.14369411555906866 0.9785097606958243 0.14788728605494753 4.66192233895411
+  position 0.8383106322567659 0.5978881261563403 1.7328400896703404
   exposure 0.5
-  follow "robot"
+  follow "robot:camera:solid"
+  followType "Mounted Shot"
 }
 TexturedBackground {
   texture "empty_office"
@@ -483,16 +484,21 @@ DEF Cat Robot {
             Shape {
               appearance Appearance {
                 material Material {
+                  ambientIntensity 1
+                  diffuseColor 1 1 1
+                  emissiveColor 1 1 1
+                  shininess 1
+                  specularColor 1 1 1
                 }
                 texture ImageTexture {
                   url [
-                    "D:/Sources/RLP_Project/RLP_Sim/protos/cat/Cat_bump.jpg"
+                    "D:/UAB/3r/RLP/Pràctica/juge-tron/RLP_Sim/protos/cat/Cat_diffuse.jpg"
                   ]
                 }
               }
               geometry Mesh {
                 url [
-                  "D:/Sources/RLP_Project/RLP_Sim/protos/cat/cat.obj"
+                  "D:/UAB/3r/RLP/Pràctica/juge-tron/RLP_Sim/protos/cat/cat.obj"
                 ]
               }
             }
@@ -721,6 +727,7 @@ DEF Cat Robot {
           appearance PBRAppearance {
             baseColor 0 0.258824 0.0117647
             metalness 0
+            emissiveColor 1 0 0
           }
           geometry IndexedFaceSet {
             coord DEF coord_LEDon Coordinate {
@@ -837,7 +844,7 @@ DEF Jugetron Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation -0.34684877869953645 -0.9351517140561155 0.07202219388875376 3.207928548485199
+            rotation 0.9077994194536009 0.24173598559468745 0.34273010855229813 5.067058735093947
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {

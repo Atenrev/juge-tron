@@ -94,13 +94,13 @@ class PathPlanner:
         if 'max_obstacle_values' not in options:
             options['max_obstacle_values'] = 1
         if 'velocity_weight' not in options:
-            options['velocity_weight'] = 600
+            options['velocity_weight'] = 800
         if 'direction_weight' not in options:
             options['direction_weight'] = 1.2
         if 'direction_bonus_weight' not in options:
-            options['direction_bonus_weight'] = 1.2
+            options['direction_bonus_weight'] = 0.85
         if 'direction_bonus_threshold' not in options:
-            options['direction_bonus_threshold'] = 30
+            options['direction_bonus_threshold'] = 40
 
         self.options = options
 
@@ -108,7 +108,7 @@ class PathPlanner:
         if len(bounding_boxes) > 0:
             self.current_state.end_state()
         
-        return [0, 0.02]
+        return [0, 0.015]
 
     def _sprint(self, motion_image: np.array) -> list:
         output = self._flee(motion_image)
@@ -148,7 +148,7 @@ class PathPlanner:
             direction *= self.options['direction_bonus_weight']
 
         vertical_velocity = (
-            motion_image.shape[0] - horizon_average - 65) / motion_image.shape[0]
+            motion_image.shape[0] - horizon_average - 60) / motion_image.shape[0]
 
         return [self.options['velocity_weight'] * vertical_velocity,  # expit(horizon_average),
                 self.options['direction_weight'] * direction * np.pi / 180]
