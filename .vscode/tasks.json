@@ -6,7 +6,9 @@
 			"label": "C/C++: g++.exe build active file",
 			"command": "D:\\sdk\\mingw\\bin\\g++.exe",
 			"args": [
-				"-g",
+				"-shared",
+				"-Wl,",
+				"--export-dynamic",
 				"${file}",
 				"-ID:/sdk/boost",
 				"-IC:/Program Files/Python39/include/",
@@ -24,7 +26,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "C/C++: g++.exe build active file",
+			"label": "C/C++: Compile.bat",
 			"command": "${fileWorkspaceFolder}\\${relativeFileDirname}\\compile.bat",
 			"presentation": {
 				"echo": true,

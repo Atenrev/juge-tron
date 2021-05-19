@@ -35,7 +35,7 @@ int webots_physics_collide(dGeomID g1, dGeomID g2) {
 void webots_physics_cleanup() {
     pthread_mutex_destroy(&mutex);
     dWebotsConsolePrintf("Clean up\n");
-    system("cls");
+    // system("cls");
     delete sp;
     delete wh;
 }
