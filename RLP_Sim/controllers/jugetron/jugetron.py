@@ -6,6 +6,7 @@ import time
 from visio.obstacle_detection import ObstacleDetection
 from visio.custom_detection import ObjectDetection
 from pathplanner import PathPlanner, State
+from detect import Yolo
 
 SPHERE_R = 0.5
 WHEEL_R = 0.03
@@ -22,7 +23,7 @@ class Sphero(Robot):
     lastMessage = None
     imageShape = None
 
-    def __init__(self):
+    def __init__(self, yolo=False):
         super(Sphero, self).__init__()
 
         # Get devices and enable
@@ -53,7 +54,10 @@ class Sphero(Robot):
         self.maxVelocity = int(self.motors[0].getMaxVelocity())
 
         self.obstacle_detector = ObstacleDetection()
-        self.cat_detector = ObjectDetection()
+        if yolo:
+            self.cat_detector = Yolo()
+        else:
+            self.cat_detector = ObjectDetection()
         self.pathplanner = PathPlanner(*self.imageShape, debug=True)
 
     def sleep(self, ms):
@@ -382,5 +386,5 @@ class Sphero(Robot):
             self.next_move(next_direction)
 
 
-controller = Sphero()
+controller = Sphero(yolo=True)
 controller.run()
