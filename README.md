@@ -13,6 +13,9 @@
 <li>
 <a href="#howtouse"> Cómo utilizar </a>
 </li>
+<li>
+<a href="#design"> Diseño del robot </a>
+</li>
 
 ## Introducción
 Este es el repositorio de un proyecto que trata de un robot en forma de bola que tiene como función jugar con las mascotas huyendo de ellas. Para realizar este propósito, el robot contará con una cámara con la cual, a través de visión por computador, será capaz de visualizar al animal y su entorno para así poder actuar con cierta personalidad. 
@@ -40,7 +43,7 @@ pip install .
 ```
 4. Abrir haciendo doble click uno de los escenarios presentes en /RLP_Sim/worlds
 
-# Diseño del robot
+# Diseño del robot <a href="#design"></a>
 
 En esta carpeta se incluye el diseño que tendrá el robot.
 ## Componentes
