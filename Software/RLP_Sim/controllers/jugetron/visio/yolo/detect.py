@@ -8,8 +8,13 @@ from utils.general import check_img_size,  non_max_suppression, scale_coords
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device
 
+
 class Yolo:
-    def __init__(self, weights='yolov5s.pt', view_img=True, imgsz=256,device = 'cpu') -> None:
+    def __init__(self, weights='yolov5s.pt', view_img=True, imgsz=256) -> None:
+        if torch.cuda.is_available():
+            device = "0"
+        else:
+            device = "cpu"
         self.device = select_device(device)
         self.view_img = view_img
         # Load model

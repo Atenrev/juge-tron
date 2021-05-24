@@ -23,7 +23,7 @@ class Sphero(Robot):
     lastMessage = None
     imageShape = None
 
-    def __init__(self, yolo=False, GPU=False):
+    def __init__(self, yolo=False):
         super(Sphero, self).__init__()
 
         # Get devices and enable
@@ -55,7 +55,7 @@ class Sphero(Robot):
 
         self.obstacle_detector = ObstacleDetection()
         if yolo:
-            self.cat_detector = Yolo(device=('0' if GPU else 'cpu'))
+            self.cat_detector = Yolo()
         else:
             self.cat_detector = ObjectDetection()
         self.pathplanner = PathPlanner(*self.imageShape, debug=True)
@@ -123,7 +123,7 @@ class Sphero(Robot):
         Returns
         -------
         out: ndarray
-            array of shape (1, 2) containing the index of the motors
+            index of the motors
         """
         # p1 is the direction of velocity.
         # p2 contains the directions of the motors and their inverse
@@ -152,7 +152,7 @@ class Sphero(Robot):
             m3 = 1
         elif (m2[0] == 1 and m2[1] == 2) or (m2[0] == 2 and m2[1] == 1):
             m3 = 0
-        print(m2, m3)
+        # print(m2, m3)
         return m, m3
 
     def movePolar(self):
@@ -187,7 +187,7 @@ class Sphero(Robot):
 
         self.setVelocity()
         self.motors[int(m3)].setVelocity(-r)
-        print([m1, m2, m3], r, rad * 180 / np.pi)
+        # print([m1, m2, m3], r, rad * 180 / np.pi)
 
     def substract_polar(self, v1, v2):
         v1 = rect(*v1)
@@ -391,11 +391,12 @@ class Sphero(Robot):
 
                 last_frame_time = frame_time
 
-            print("State:", state)
-            print("Velocity:", next_direction[0],
-                  "Direction", next_direction[1])
+                print("State:", state)
+                d = self.polarVel[1] * 180 / np.pi
+                s = f"Velocity: {self.polarVel[0]: 0.2f} m/s Direction {d: 0.2f} °"
+                print(s)
             self.next_move(next_direction)
 
 
-controller = Sphero(yolo=True, GPU=True)
+controller = Sphero(yolo=True)
 controller.run()

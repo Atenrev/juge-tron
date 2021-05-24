@@ -106,14 +106,18 @@ https://nanonets.com/blog/optical-flow/
 ```
 pip install -U --pre tensorflow=="2.*"
 pip install tf_slim
+pip install -r requirements.txt
 ```
-3. Dirigirse a la carpeta "/Reconocimiento de imágenes" y ejecutar los siguientes comandos:
-``` powershell
+3. Instalar PyTorch desde https://pytorch.org/, elegir CUDA 11.1 o mayor si se desea utilizar la GPU.
+4. Dirigirse a la carpeta "/Reconocimiento de imágenes" y ejecutar los siguientes comandos:
+
+``` 
+powershell
 cd research/
 protoc object_detection/protos/*.proto --python_out=.
 pip install .
 ```
-4. Abrir haciendo doble click uno de los escenarios presentes en /RLP_Sim/worlds
+5. Abrir haciendo doble click uno de los escenarios presentes en /RLP_Sim/worlds
 
 <div id='design'/>
 
