@@ -4,15 +4,19 @@
 <li>
 <a href="#whatis"> ¿Qué es este proyecto? </a>
 </li>
+
 <li>
 <a href="#req"> Requerimientos </a>
 </li>
+
 <li>
 <a href="#docu"> Documentación </a>
 </li>
+
 <li>
 <a href="#howtouse"> Cómo utilizar </a>
 </li>
+
 <li>
 <a href="#design" id="#design"> Diseño del robot </a>
  <ul>
@@ -27,6 +31,7 @@
   </li> 
  </ul>
 </li>
+
 <li>
 <a href="#software"> Arquitectura Software </a>
  <ul>
