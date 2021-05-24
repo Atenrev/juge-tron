@@ -213,6 +213,7 @@ La máquina cuenta con 4 estados: FLEE, STABILIZE, SEARCH CAT y SPRINT. En el pr
 El algoritmo de esquiva de obstáculos toma la máscara devuelta por el módulo de visión y crea un vector con el índice máximo en el que hay un valor diferente de 0 de cada columna. Este vector simboliza una línea del horizonte. Entonces, hace un sumatorio a partir de cada valor del vector ponderado por la distancia respecto al límite superior de la imagen y al centro en el eje horizontal. El resultado de este valor marcará en qué dirección y con qué velocidad deberá girar el robot. El algoritmo también calcula la velocidad de movimiento a partir de la diferencia del ancho de la imagen entre la media de los valores del vector y un threshold. De esta manera, cuanto más cercana al robot sea la línea del horizonte, más despacio irá para poder maniobrar mejor.
 
 <div id='otrosSens'/>
+
 ### Otros sensores
 Este módulo controlará los datos del giroscopio/acelerómetro y los traducirá a órdenes sobre los tres motores internos. Los datos extraídos serán trasladados a información necesaria para que el robot pueda mantenerse erguido, cosa que se considera de fundamental importancia ya que así la cámara podrá extraer datos más precisos.
 
