@@ -30,13 +30,17 @@
 <li>
 <a href="#software"> Arquitectura Software </a>
  <ul>
+  <li>
   <a href="#VC"> Visión por computador </a>
+  </li>
+  <ul>
    <li>
     <a href="#detectObst"> Detector de obstáculos </a>
    </li>
    <li>
     <a href="#detectorConcr"> Detector concreto </a>
    </li>
+   </ul>
   </ul>
  <ul>
  <li>
@@ -57,6 +61,7 @@
 <li>
 <a href="#sim"> Simulación </a>
 </li>
+
 <li>
 <a href="#autores"> Autores </a>
 </li>
