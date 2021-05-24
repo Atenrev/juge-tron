@@ -14,7 +14,7 @@
 <a href="#howtouse"> Cómo utilizar </a>
 </li>
 <li>
-<a href="#design"> Diseño del robot </a>
+<a href="#design" id="#design"> Diseño del robot </a>
 </li>
 
 ## Introducción
@@ -43,8 +43,8 @@ pip install .
 ```
 4. Abrir haciendo doble click uno de los escenarios presentes en /RLP_Sim/worlds
 
-<a href="#design"></a>
 # Diseño del robot 
+<a href="#design" name="#design"></a>
 
 En esta carpeta se incluye el diseño que tendrá el robot.
 ## Componentes
