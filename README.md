@@ -15,11 +15,55 @@
 </li>
 <li>
 <a href="#design" id="#design"> Diseño del robot </a>
+ <ul>
+  <a href="#components"> Componentes </a>
+ </ul>
+ <ul>
+  <a href="#esq3d"> Esquema 3D </a>
+ </ul>
+ <ul>
+  <a href="#esqHW"> Esquema Hardware </a>
+ </ul>
 </li>
+<li>
+<a href="#software"> Arquitectura Software </a>
+ <ul>
+  <a href="#VC"> Visión por computador </a>
+   <ul>
+    <a href="#detectObst"> Detector de obstáculos </a>
+   </ul>
+   <ul>
+    <a href="#detectorConcr"> Detector concreto </a>
+   </ul>
+ </ul>
+ <ul>
+  <a href="#pathpl"> Path-Planning </a>
+ </ul>
+ <ul>
+  <a href="#otrosSens"> Otros Sensores </a>
+ </ul>
+ <ul>
+  <a href="#calcMov"> Cálculo de movimiento </a>
+ </ul>
+ <ul>
+  <a href="#arduino"> Arduino </a>
+ </ul>
+</li>
+<li>
+<a href="#sim"> Simulación </a>
+</li>
+<li>
+<a href="#autores"> Autores </a>
+</li>
+
+
+<div id='whatis'/>
 
 ##  ¿Qué es este proyecto?
 Este es el repositorio de un proyecto que trata de un robot en forma de bola que tiene como función jugar con las mascotas huyendo de ellas. Para realizar este propósito, el robot contará con una cámara con la cual, a través de visión por computador, será capaz de visualizar al animal y su entorno para así poder actuar con cierta personalidad. 
 El robot se moverá debido a la fricción ejercida por unas ruedas internas contra la carcasa de la bola, y los elementos del interior se mantendrán estables debido a un peso que ejercerá de centro de masas.
+
+<div id='#req'/>
 
 ## Requerimientos
 Para ejecutar la simulación hacen falta las siguientes dependencias de python:
@@ -27,12 +71,18 @@ Para ejecutar la simulación hacen falta las siguientes dependencias de python:
 pip install numpy, opencv-python, tensorflow, 
 ```
 También se requiere tener instalado el simulador Webots.
+
+<div id='#doc'/>
+
 ## Documentación
 Los siguientes proyectos han servido como referencia e inspiración:
 https://www.hindawi.com/journals/complexity/2019/7543969/
 https://www.sciencedirect.com/science/article/pii/S0307904X14006015
 https://github.com/tensorflow/models/blob/master/research/object_detection/colab_tutorials/object_detection_tutorial.ipynb
 https://nanonets.com/blog/optical-flow/
+
+
+<div id='#howtouse'/>
 
 ## Cómo utilizar
 1. Clonar el repositorio
@@ -49,8 +99,9 @@ pip install .
 ```
 4. Abrir haciendo doble click uno de los escenarios presentes en /RLP_Sim/worlds
 
+<div id='#design'/>
+
 ## Diseño del robot 
-<a href="#design" name="#design"></a>
 
 En esta carpeta se incluye el diseño que tendrá el robot.
 ### Componentes
