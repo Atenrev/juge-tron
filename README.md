@@ -75,13 +75,65 @@ Debajo de la base se pegará un cilindro. Contendrá un peso que ejercerá como 
 
 Finalmente, encima de la base se colocarán los diferentes componentes Hardware de manera estratégica.
 
-![base](Imágenes/esquema_final.JPG)
-
 Las ruedas se conectarán a los motores mediante un sistema de poleas. El diseño de las piezas 3D se incluye en la carpeta piezas, y en el archivo Esquema3d.dwg se ha incluido un modelo 3D del esquema de colocación de las piezas que aquí se ha explicado.
 
+![base](Imágenes/esquema_final.JPG)
+
+![base](Imágenes/robot1.png)
 ### Esquema Hardware
 El esquema de conexión entre los diferentes componentes hardware es el siguiente
 
 ![base](Imágenes/esquema.png)
 
+## Arquitectura Software
+Se han identificado los diferentes módulos software
 
+![base](Imágenes/modulos.png)
+### Visión por computador
+
+ ste módulo será el encargado de interpretar las imágenes que entren como input desde la cámara. Aquí se efectuará la obtención de datos a partir de las imágenes.
+ 
+Se hará uso de un modelo entrenado de redes neuronales capaz de reconocer al animal doméstico y, mediante procesamiento de imagen, de posicionarlo en el espacio. Además reconocerá también obstáculos que haya en el camino para, una vez identificado todo, pasar esta información al módulo de pathplanning.
+
+Para lograrlo, se hará uso de las librerías Python OpenCV (para la captación y procesamiento de la imagen) y Keras (para el uso de modelos de inteligencia artificial). 
+Este módulo se puede dividir en dos detectores diferentes, el detector de obstáculos y el detector concreto.
+
+#### Detector de obstáculos
+El detector de obstáculos tendrá la función de identificar obstáculos que el robot pueda encontrar en su camino y extraer información de estos, como puede ser la distancia o la posición de estos.
+
+Se ha optado por un enfoque en el que se ha usado un algoritmo de Dense Optical Flow. Así pues, el algoritmo de visión del MVP aplica el algoritmo de Optical Flow sobre el frame anterior y el actual y aprovecha las magnitudes devueltas a las que aplica un threshold y, por último, un closing para eliminar posible ruido y unir algunas partes que pudieran quedar sueltas. La máscara resultante es la que se devolverá y se usará para el pathplanning. Este proceso queda reflejado en el siguiente diagrama.
+
+![base](Imágenes/deteccion_obs_diagrama.png)
+
+Por otro lado, en la siguiente imagen se puede observar un ejemplo de máscara devuelta.
+![base](Imágenes/deteccion_obs_ejemplo.png)
+
+#### Detector concreto
+El detector concreto se encargará de identificar objetos clave, en nuestro caso la mascota de la que tendrá que huir. Igual que el detector de obstáculos, también devolverá información de estos objetos, en este caso, la bounding box.
+![base](Imágenes/gato.png)
+
+### Path-planning
+Este módulo será el que se encargue de procesar el mapa generado por el módulo de visión por computador, teniendo en cuenta la localización de la mascota y de los obstáculos. Trazará una ruta que será ejecutada mediante el movimiento de los motores internos del robot. 
+
+Se seguirá una estrategia greedy para trazar una ruta puesto que no se contará con el mapeo del entorno. El algoritmo trabajará únicamente con la información recibida por el módulo de visión, con la que podrá hacer una mínima planificación de una posible ruta a seguir, aunque esta podrá ser modificada mientras se recorre (debido a imprevistos).
+
+El algoritmo ha sido programado por el equipo íntegramente, tomando como referencia algoritmos de búsqueda local.
+
+En definitiva, se ha definido una máquina de estados finitos que define la personalidad del robot.
+
+![base](Imágenes/mef.png)
+La máquina cuenta con 4 estados: FLEE, STABILIZE, SEARCH CAT y SPRINT. En el primer estado, el robot correrá libremente esquivando obstáculos y paredes durante unos segundos. Una vez transcurridos estos segundos, se parará para buscar al gato (estado SEARCH CAT). Más adelante se explicará en profundidad la parte fundamental del algoritmo de esquiva de obstáculos. El segundo estado para los motores y espera a que las lecturas del giroscopio se normalicen, para ello se calcula la la magnitud del vector de lectura y se compara con un threshold (tal y como se puede observar en la imagen anterior). El tercer estado da la orden de parar motores y rota la cámara hasta dar con el gato. Si este no estuviera en su rango de visión y transcurridos unos segundos el robot volvería al estado de FLEE. En caso contrario, entra en estado de SPRINT, el cual ejecuta el mismo algoritmo que el estado FLEE pero multiplicando por un factor la velocidad de movimiento y de rotación emulando una reacción exagerada. De esta manera, el robot adquiere una personalidad que llamará la atención de los gatos y la mantendrá.
+
+El algoritmo de esquiva de obstáculos toma la máscara devuelta por el módulo de visión y crea un vector con el índice máximo en el que hay un valor diferente de 0 de cada columna. Este vector simboliza una línea del horizonte. Entonces, hace un sumatorio a partir de cada valor del vector ponderado por la distancia respecto al límite superior de la imagen y al centro en el eje horizontal. El resultado de este valor marcará en qué dirección y con qué velocidad deberá girar el robot. El algoritmo también calcula la velocidad de movimiento a partir de la diferencia del ancho de la imagen entre la media de los valores del vector y un threshold. De esta manera, cuanto más cercana al robot sea la línea del horizonte, más despacio irá para poder maniobrar mejor.
+
+### Otros sensores
+Este módulo controlará los datos del giroscopio/acelerómetro y los traducirá a órdenes sobre los tres motores internos. Los datos extraídos serán trasladados a información necesaria para que el robot pueda mantenerse erguido, cosa que se considera de fundamental importancia ya que así la cámara podrá extraer datos más precisos.
+
+Los sensores estarán conectados a la raspberry, en la cual se usará la librería mpu6050-raspberrypi 1.1 para leer los valores del giroscopio/acelerómetro.
+
+### Cálculo de movimiento
+A partir de la dirección recibida por el módulo de pathplanning y la información de los demás sensores, este módulo calculará con precisión el próximo movimiento y fuerza a aplicar en los motores. Este buscará, en la medida de lo posible, seguir el camino trazado por el pathplanner y mantener estable la estructura interna del robot.
+
+### Arduino
+
+Este módulo hará de actuador y enviará las señales a los motores mediante la librería stepper.
