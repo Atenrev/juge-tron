@@ -16,13 +16,15 @@
 <li>
 <a href="#design" id="#design"> Diseño del robot </a>
  <ul>
-  <a href="#components"> Componentes </a>
- </ul>
- <ul>
-  <a href="#esq3d"> Esquema 3D </a>
- </ul>
- <ul>
-  <a href="#esqHW"> Esquema Hardware </a>
+  <li>
+   <a href="#components"> Componentes </a>
+  </li>
+  <li>
+   <a href="#esq3d"> Esquema 3D </a>
+  </li>
+  <li>
+   <a href="#esqHW"> Esquema Hardware </a>
+  </li> 
  </ul>
 </li>
 <li>
@@ -73,7 +75,7 @@ pip install numpy, opencv-python, tensorflow,
 ```
 También se requiere tener instalado el simulador Webots. 
  
-<div id='doc'/>
+<div id='docu'/>
 
 ## Documentación
 Los siguientes proyectos han servido como referencia e inspiración:
