@@ -14,13 +14,13 @@ Robot {
                 }
                 texture ImageTexture {
                   url [
-                    "D:/Sources/RLP_Project/RLP_Sim/protos/cat/Cat_bump.jpg"
+                    "textures/cat/Cat_bump.jpg"
                   ]
                 }
               }
               geometry Mesh {
                 url [
-                  "D:/Sources/RLP_Project/RLP_Sim/protos/cat/cat.obj"
+                  "textures/cat/cat.obj"
                 ]
               }
             }
