@@ -31,26 +31,27 @@
 <a href="#software"> Arquitectura Software </a>
  <ul>
   <a href="#VC"> Visión por computador </a>
-   <ul>
+   <li>
     <a href="#detectObst"> Detector de obstáculos </a>
-   </ul>
-   <ul>
+   </li>
+   <li>
     <a href="#detectorConcr"> Detector concreto </a>
-   </ul>
- </ul>
- <ul>
+   </li>
+ <li>
   <a href="#pathpl"> Path-Planning </a>
- </ul>
- <ul>
+ </li>
+ <li>
   <a href="#otrosSens"> Otros Sensores </a>
- </ul>
- <ul>
+ </li>
+ <li>
   <a href="#calcMov"> Cálculo de movimiento </a>
- </ul>
- <ul>
+ </li>
+ <li>
   <a href="#arduino"> Arduino </a>
+ </li>
  </ul>
 </li>
+
 <li>
 <a href="#sim"> Simulación </a>
 </li>
