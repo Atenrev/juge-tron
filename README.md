@@ -43,7 +43,8 @@ pip install .
 ```
 4. Abrir haciendo doble click uno de los escenarios presentes en /RLP_Sim/worlds
 
-# Diseño del robot <a href="#design"></a>
+<a href="#design"></a>
+# Diseño del robot 
 
 En esta carpeta se incluye el diseño que tendrá el robot.
 ## Componentes
