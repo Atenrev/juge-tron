@@ -1,12 +1,18 @@
 # Juge-tron
 
 # Tabla de contenidos
-1. [¿Qué es este proyecto?] (#whatis)
-2. [Requerimientos] (#requeri)
-3. [Documentación] (#docu)
-4. [Cómo utilizar] (#howtouse)
-
+<li>
 <a href="#whatis"> ¿Qué es este proyecto? </a>
+</li>
+<li>
+<a href="#req"> Requerimientos </a>
+</li>
+<li>
+<a href="#docu"> Documentación </a>
+</li>
+<li>
+<a href="#howtouse"> Cómo utilizar </a>
+</li>
 
 ## Introducción
 Este es el repositorio de un proyecto que trata de un robot en forma de bola que tiene como función jugar con las mascotas huyendo de ellas. Para realizar este propósito, el robot contará con una cámara con la cual, a través de visión por computador, será capaz de visualizar al animal y su entorno para así poder actuar con cierta personalidad. 
