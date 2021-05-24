@@ -17,18 +17,24 @@
 <a href="#design" id="#design"> Diseño del robot </a>
 </li>
 
-## Introducción
+##  ¿Qué es este proyecto?
 Este es el repositorio de un proyecto que trata de un robot en forma de bola que tiene como función jugar con las mascotas huyendo de ellas. Para realizar este propósito, el robot contará con una cámara con la cual, a través de visión por computador, será capaz de visualizar al animal y su entorno para así poder actuar con cierta personalidad. 
 El robot se moverá debido a la fricción ejercida por unas ruedas internas contra la carcasa de la bola, y los elementos del interior se mantendrán estables debido a un peso que ejercerá de centro de masas.
 
-## Requisitos
+## Requerimientos
 Para ejecutar la simulación hacen falta las siguientes dependencias de python:
 ```
 pip install numpy, opencv-python, tensorflow, 
 ```
 También se requiere tener instalado el simulador Webots.
+## Documentación
+Los siguientes proyectos han servido como referencia e inspiración:
+https://www.hindawi.com/journals/complexity/2019/7543969/
+https://www.sciencedirect.com/science/article/pii/S0307904X14006015
+https://github.com/tensorflow/models/blob/master/research/object_detection/colab_tutorials/object_detection_tutorial.ipynb
+https://nanonets.com/blog/optical-flow/
 
-## Cómo ejecutar la simulación
+## Cómo utilizar
 1. Clonar el repositorio
 2. Instalar las siguientes dependencias
 ```
@@ -43,11 +49,11 @@ pip install .
 ```
 4. Abrir haciendo doble click uno de los escenarios presentes en /RLP_Sim/worlds
 
-# Diseño del robot 
+## Diseño del robot 
 <a href="#design" name="#design"></a>
 
 En esta carpeta se incluye el diseño que tendrá el robot.
-## Componentes
+### Componentes
 Los componentes Hardware utilizados serán los siguientes:
 
 ![components](Imágenes/precios.JPG)
@@ -56,7 +62,7 @@ El tamaño de cada componente se incluye en la siguiente tabla:
 
 ![tamany](Imágenes/Tamaños.JPG)
 
-## Esquema 3D
+### Esquema 3D
 El esquema básico dentro de la bola se compone de una base cilíndrica, sobre la que se colocarán los componentes hardware necesarios, tres ruedas que harán girar la carcasa de la bola mediante la fricción que ejerzan sobre ella, y tres varitas que unan las ruedas a la base. Este esquema se muestra en la siguiente imagen:
 
 ![base](Imágenes/esquema_base.JPG)
@@ -73,9 +79,9 @@ Finalmente, encima de la base se colocarán los diferentes componentes Hardware 
 
 Las ruedas se conectarán a los motores mediante un sistema de poleas. El diseño de las piezas 3D se incluye en la carpeta piezas, y en el archivo Esquema3d.dwg se ha incluido un modelo 3D del esquema de colocación de las piezas que aquí se ha explicado.
 
-## Esquema Hardware
+### Esquema Hardware
 El esquema de conexión entre los diferentes componentes hardware es el siguiente
 
-![base](Imágenes/esquema.JPG)
+![base](Imágenes/esquema.png)
 
 
