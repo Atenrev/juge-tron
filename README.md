@@ -137,3 +137,27 @@ A partir de la dirección recibida por el módulo de pathplanning y la informaci
 ### Arduino
 
 Este módulo hará de actuador y enviará las señales a los motores mediante la librería stepper.
+
+## Simulación
+
+La simulación se ha llevado a cabo en el simulador Webots, dado que se trata de un simulador con un motor de físicas suficientemente complejo como para simular el robot.  El primer objetivo ha sido crear el modelo 3D y modelar las funciones de movimiento del robot a partir del movimiento de las ruedas, teniendo en cuenta todos los factores físicos  posibles (inercia, fricción, gravedad, etc.) tal y como ocurriría en la vida real.
+
+Posteriormente, se ha generardo un entorno realista basado en una vivienda amueblada donde el modelo definido ha sido testeado. Así, se pueden ver las interacciones con los obstáculos estáticos y, también,  con los dinámicos.  La simulación mostrará en todo momento  un punto de vista desde el que se pueda ver la bola por la parte de atrás.
+
+El modelo del robot simulado cuenta con una carcasa, 3 motores rotacionales y un cilindro que actúa como centro de masas. El robot se puede controlar mediante el teclado enviando instrucciones directamente a cada uno de los motores con los que cuenta, o bien de manera automática.
+
+Se ha escrito un plugin para el simulador que calcula la velocidad angular de la esfera a partir de las velocidades de las tres ruedas utilizando la siguiente fórmula.
+wesfera=rRuedaswr*resfera/rrueda
+
+Finalmente, se ha añadido un gato montado en un robot móvil que se irá moviendo por el entorno para que el juguetron pueda detectarlo.
+
+Se puede ver un vídeo que muestra la simulación en el siguiente link
+https://www.youtube.com/watch?v=B3XyeeSNB98
+
+## Autores
+Iván Lorenzo Alcaina
+Pablo Chen
+Biel Castaño Segade
+Sergi Masip Cabeza
+
+Este proyecto se ha realizado para la asignatura Robótica, Lenguaje y Programación, de la mención de computación de Ingenieria informática por la Universidad Autónoma de Barcelona.
