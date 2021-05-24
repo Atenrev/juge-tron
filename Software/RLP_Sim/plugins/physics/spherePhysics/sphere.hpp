@@ -61,31 +61,16 @@ class Sphere {
     void step() {
         dReal wf[3] = {0, 0, 0};
 
+        auto wheels = wheels_->getON();
         for (int i = 0; i < N_WHEELS; i++) {
-            auto w = wheels_->getWheelAngular(i);
-            wf[0] += (w[0] * WHEEL_R) / SPHERE_R;
-            wf[1] += (w[1] * WHEEL_R) / SPHERE_R;
-            wf[2] += (w[2] * WHEEL_R) / SPHERE_R;
+            if (wheels[i]) {
+                auto w = wheels_->getWheelAngular(i);
+                wf[0] += (w[0] * WHEEL_R) / SPHERE_R;
+                wf[1] += (w[1] * WHEEL_R) / SPHERE_R;
+                wf[2] += (w[2] * WHEEL_R) / SPHERE_R;
+            }
         }
-
-        auto w0n = getNorm(wheels_->getWheelAngular(0));
-        auto w1n = getNorm(wheels_->getWheelAngular(1));
-        auto w2n = getNorm(wheels_->getWheelAngular(2));
-        wheels_->getON();
-        // printf("%0.3f %0.3f %0.3f\n", w0n, w1n, w2n);
-        // printf("Norm %0.3f\n", getNorm(wf));
-        // printV("wf", wf);
-        // printf("\n");
         setAngular(wf);
-
-        // auto w0 = wheels_->getWheelAngular(0);
-        // auto w1 = wheels_->getWheelAngular(0);
-        // auto w2 = wheels_->getWheelAngular(0);
-        // for (int i = 0; i < 3; i++) {
-        //     if (w0n > 1 && w1n > 1) {
-        //         wheels_->setAngular(w0, w1, 2);
-        //     }
-        // }
     }
 
     void printData() const {

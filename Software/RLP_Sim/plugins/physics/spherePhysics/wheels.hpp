@@ -78,28 +78,14 @@ class Wheels {
         const int *data = (const int *)dWebotsReceive(&dataSize);
         if (dataSize > 0) {
             if (data[0] == VELOCITY_MSG) {
-                printf("Received velocity: \n");
+                // printf("Received velocity: \n");
                 const float *vel = (const float *)&data[1];
                 for (int i = 0; i < N_WHEELS; i++) {
                     wheelVelocity_[i] = vel[i];
                     // printf("%0.2f ", vel[i]);
                 }
-                // printf("\n");
             }
         }
-        // if (dataSize > 0) {
-        //     char *msg = new char[dataSize];
-        //     int count = 1, i = 0, j = 0;
-        //     for (; i < dataSize; ++i) {
-        //         int c = data[i];
-        //         wheelVelocity_[i] = c;
-        //         if (c)
-        //             printf("%d", c);
-        //         else
-        //             printf("0");
-        //     }
-        //     printf("\n");
-        // }
         return wheelVelocity_;
     }
 

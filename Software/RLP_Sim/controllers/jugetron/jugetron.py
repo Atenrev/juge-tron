@@ -143,7 +143,17 @@ class Sphero(Robot):
         d = np.sqrt(2 * (1 - np.cos(ang2 - ang1)))
         m = np.argpartition(d, axis=0, kth=2)[:2]
         m[m > 2] -= 6
-        return m
+        m2 = m.copy()
+        m2[m2 < 0] += 3
+        m3 = 0
+        if (m2[0] == 0 and m2[1] == 1) or (m2[0] == 1 and m2[1] == 0):
+            m3 = 2
+        elif (m2[0] == 0 and m2[1] == 2) or (m2[0] == 2 and m2[1] == 0):
+            m3 = 1
+        elif (m2[0] == 1 and m2[1] == 2) or (m2[0] == 2 and m2[1] == 1):
+            m3 = 0
+        print(m2, m3)
+        return m, m3
 
     def movePolar(self):
         """
@@ -161,7 +171,7 @@ class Sphero(Robot):
         v = rect(r, rad)
         v = np.abs([v.real, v.imag])
         v1, v2 = v.max(), v.min()
-        m1, m2 = self.findMotors(rad)
+        (m1, m2), m3 = self.findMotors(rad)
 
         v1 = -v1 if m1 < 0 else v1
         v2 = -v2 if m2 < 0 else v2
@@ -176,7 +186,8 @@ class Sphero(Robot):
         self.velocity = vel
 
         self.setVelocity()
-        # print([m1, m2], r, rad * 180 / np.pi)
+        self.motors[int(m3)].setVelocity(-r)
+        print([m1, m2, m3], r, rad * 180 / np.pi)
 
     def substract_polar(self, v1, v2):
         v1 = rect(*v1)

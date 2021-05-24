@@ -18,8 +18,6 @@ void webots_physics_init() {
     // freopen("CONOUT$", "w", stdout);
     wh = new Wheels();
     sp = new Sphere(wh);
-    // sp->printData();
-    // wh->printData();
 }
 
 void webots_physics_step() {
@@ -34,7 +32,7 @@ int webots_physics_collide(dGeomID g1, dGeomID g2) {
 
 void webots_physics_cleanup() {
     pthread_mutex_destroy(&mutex);
-    dWebotsConsolePrintf("Clean up\n");
+    // dWebotsConsolePrintf("Clean up\n");
     // system("cls");
     delete sp;
     delete wh;
