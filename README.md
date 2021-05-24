@@ -156,8 +156,11 @@ https://www.youtube.com/watch?v=B3XyeeSNB98
 
 ## Autores
 Iván Lorenzo Alcaina
+
 Pablo Chen
+
 Biel Castaño Segade
+
 Sergi Masip Cabeza
 
 Este proyecto se ha realizado para la asignatura Robótica, Lenguaje y Programación, de la mención de computación de Ingenieria informática por la Universidad Autónoma de Barcelona.
