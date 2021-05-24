@@ -84,7 +84,7 @@ El robot se moverá debido a la fricción ejercida por unas ruedas internas cont
 ## Requerimientos
 Para ejecutar la simulación hacen falta las siguientes dependencias de python:
 ```
-pip install numpy, opencv-python, tensorflow, 
+pip install numpy, opencv-python, tensorflow
 ```
 También se requiere tener instalado el simulador Webots. 
  
@@ -100,7 +100,7 @@ https://nanonets.com/blog/optical-flow/
 
 <div id='howtouse'/>
 
-## Cómo utilizar
+## Cómo ejecutar la simulación
 1. Clonar el repositorio
 2. Instalar las siguientes dependencias
 ```
@@ -171,7 +171,7 @@ Se han identificado los diferentes módulos software
 
 ### Visión por computador
 
- ste módulo será el encargado de interpretar las imágenes que entren como input desde la cámara. Aquí se efectuará la obtención de datos a partir de las imágenes.
+Este módulo será el encargado de interpretar las imágenes que entren como input desde la cámara. Aquí se efectuará la obtención de datos a partir de las imágenes.
  
 Se hará uso de un modelo entrenado de redes neuronales capaz de reconocer al animal doméstico y, mediante procesamiento de imagen, de posicionarlo en el espacio. Además reconocerá también obstáculos que haya en el camino para, una vez identificado todo, pasar esta información al módulo de pathplanning.
 
@@ -179,6 +179,7 @@ Para lograrlo, se hará uso de las librerías Python OpenCV (para la captación 
 Este módulo se puede dividir en dos detectores diferentes, el detector de obstáculos y el detector concreto.
 
 <div id='detectObst'/>
+
 #### Detector de obstáculos
 El detector de obstáculos tendrá la función de identificar obstáculos que el robot pueda encontrar en su camino y extraer información de estos, como puede ser la distancia o la posición de estos.
 
@@ -241,12 +242,13 @@ Posteriormente, se ha generardo un entorno realista basado en una vivienda amueb
 El modelo del robot simulado cuenta con una carcasa, 3 motores rotacionales y un cilindro que actúa como centro de masas. El robot se puede controlar mediante el teclado enviando instrucciones directamente a cada uno de los motores con los que cuenta, o bien de manera automática.
 
 Se ha escrito un plugin para el simulador que calcula la velocidad angular de la esfera a partir de las velocidades de las tres ruedas utilizando la siguiente fórmula.
+
 ![base](Imágenes/MathFormula.png)
 
 Finalmente, se ha añadido un gato montado en un robot móvil que se irá moviendo por el entorno para que el juguetron pueda detectarlo.
 
 Se puede ver un vídeo que muestra la simulación en el siguiente link
-https://www.youtube.com/watch?v=B3XyeeSNB98
+https://www.youtube.com/watch?v=o8pFeoxQk68
 
 <div id='autores'/>
 
