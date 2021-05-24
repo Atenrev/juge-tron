@@ -23,7 +23,7 @@ class Sphero(Robot):
     lastMessage = None
     imageShape = None
 
-    def __init__(self, yolo=False):
+    def __init__(self, yolo=False, GPU=False):
         super(Sphero, self).__init__()
 
         # Get devices and enable
@@ -55,7 +55,7 @@ class Sphero(Robot):
 
         self.obstacle_detector = ObstacleDetection()
         if yolo:
-            self.cat_detector = Yolo()
+            self.cat_detector = Yolo(device=('0' if GPU else 'cpu'))
         else:
             self.cat_detector = ObjectDetection()
         self.pathplanner = PathPlanner(*self.imageShape, debug=True)
@@ -397,5 +397,5 @@ class Sphero(Robot):
             self.next_move(next_direction)
 
 
-controller = Sphero(yolo=True)
+controller = Sphero(yolo=True, GPU=True)
 controller.run()

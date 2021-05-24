@@ -9,8 +9,8 @@ from utils.plots import plot_one_box
 
 
 class Yolo:
-    def __init__(self, weights='yolov5s.pt', view_img=True, imgsz=256) -> None:
-        self.device = torch.device('cpu')
+    def __init__(self, weights='yolov5s.pt', view_img=True, imgsz=256,device = 'cpu') -> None:
+        self.device = select_device(device)
         self.view_img = view_img
         # Load model
         self.model = attempt_load(
