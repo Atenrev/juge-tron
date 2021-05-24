@@ -6,8 +6,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.10724709095406094 0.9891405325362632 0.1004941211005351 4.766479926578251
-  position 0.9180320589701434 0.4780029280896716 2.2108791060347612
+  orientation 0.011185974563929838 0.9995929451168651 0.0262453433135639 3.947085727760767
+  position -1.0040161582615692 0.27851091840247477 -1.4617231095639491
   follow "robot:camera:solid"
   followType "Mounted Shot"
 }
@@ -665,7 +665,7 @@ Group {
       color 0.221 0.221 0.221
     }
     Armchair {
-      translation 0.923649 0 1.70658
+      translation 0.71859 0 1.91161
       rotation 0 1 0 2.3562
       name "armchair(3)"
       color 0.221 0.221 0.221
@@ -812,7 +812,7 @@ Group {
       color 0.221 0.221 0.221
     }
     Chair {
-      translation 3.078 0 3.88999
+      translation 2.3852 0 4.28999
       rotation 0 -1 0 -0.5236053071795865
       name "chair(4)"
       color 0.221 0.221 0.221
@@ -898,7 +898,8 @@ Group {
   ]
 }
 DEF Cat Robot {
-  translation 4.15183 0.045 1.72037
+  translation 7.00183 0.045 4.38037
+  rotation 0 1 0 1.5708
   children [
     Transform {
       rotation 9.739736986043976e-07 0.7071067811862122 0.7071067811862122 3.14159
@@ -1251,8 +1252,8 @@ DEF Cat Robot {
   controller "create_avoid_obstacles"
 }
 DEF Jugetron Robot {
-  translation 1.9 0.1 2.12
-  rotation 1 0 0 0
+  translation -0.468806 0.1 -0.958797
+  rotation 0 1 0 -0.785395307179586
   children [
     DEF Controller Solid {
       children [
@@ -1268,7 +1269,7 @@ DEF Jugetron Robot {
             staticFriction 0.01
           }
           endPoint DEF Sphero Solid {
-            rotation -0.005474962699079313 0.7782059918176266 0.6279852379495777 2.876353752307031
+            rotation 0.5328287604943067 -0.7087377685274144 -0.46236812979798014 3.0411192372647524
             children [
               DEF HolllowSphere Shape {
                 appearance PBRAppearance {

@@ -377,11 +377,11 @@ class Sphero(Robot):
                 vision_image = None
 
                 if state == State.SEARCH_CAT:
-                    fps = 1
+                    # fps = 1
                     vision_image = self.cat_detector.show_inference_and_return(
                         image)
                 else:
-                    fps = 1 / 10
+                    # fps = 1 / 10
                     vision_image = self.obstacle_detector.detect(
                         image, draw=True)
 

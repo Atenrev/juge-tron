@@ -21,13 +21,13 @@ class StateMachine:
             self.timelimit = 3
         elif state == State.FLEE:
             self.set_counter()
-            self.timelimit = np.random.randint(45, 55)
+            self.timelimit = 30 #np.random.randint(45, 55)
         elif state == State.SEARCH_CAT:
             self.set_counter()
             self.timelimit = 25
         elif state == State.SPRINT:
             self.set_counter()
-            self.timelimit = 5
+            self.timelimit = 20
 
     def _end_state_by_time(self):
         return self.counter + self.timelimit < time.time()
@@ -92,7 +92,7 @@ class PathPlanner:
         if 'max_obstacle_values' not in options:
             options['max_obstacle_values'] = 1
         if 'velocity_weight' not in options:
-            options['velocity_weight'] = 800
+            options['velocity_weight'] = 400
         if 'direction_weight' not in options:
             options['direction_weight'] = 1.2
         if 'direction_bonus_weight' not in options:
