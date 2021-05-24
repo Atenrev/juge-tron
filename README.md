@@ -147,7 +147,8 @@ Posteriormente, se ha generardo un entorno realista basado en una vivienda amueb
 El modelo del robot simulado cuenta con una carcasa, 3 motores rotacionales y un cilindro que actúa como centro de masas. El robot se puede controlar mediante el teclado enviando instrucciones directamente a cada uno de los motores con los que cuenta, o bien de manera automática.
 
 Se ha escrito un plugin para el simulador que calcula la velocidad angular de la esfera a partir de las velocidades de las tres ruedas utilizando la siguiente fórmula.
-wesfera=rRuedaswr*resfera/rrueda
+
+![equation] (https://latex.codecogs.com/svg.image?W_{esfera}&space;=&space;\sum_{r}^{Ruedas}&space;Wr*r_{esfera}/r_{rueda}" title="W_{esfera} = \sum_{r}^{Ruedas} Wr*r_{esfera}/r_{rueda})
 
 Finalmente, se ha añadido un gato montado en un robot móvil que se irá moviendo por el entorno para que el juguetron pueda detectarlo.
 
