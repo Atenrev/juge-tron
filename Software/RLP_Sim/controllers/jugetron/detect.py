@@ -6,7 +6,7 @@ from models.experimental import attempt_load
 from utils.datasets import letterbox
 from utils.general import check_img_size,  non_max_suppression, scale_coords
 from utils.plots import plot_one_box
-
+from utils.torch_utils import select_device
 
 class Yolo:
     def __init__(self, weights='yolov5s.pt', view_img=True, imgsz=256,device = 'cpu') -> None:
