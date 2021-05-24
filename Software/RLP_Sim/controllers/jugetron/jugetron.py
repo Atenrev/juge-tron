@@ -5,8 +5,8 @@ import struct
 import time
 from visio.obstacle_detection import ObstacleDetection
 from visio.custom_detection import ObjectDetection
+from visio.yolo import Yolo
 from pathplanner import PathPlanner, State
-from detect import Yolo
 
 SPHERE_R = 0.5
 WHEEL_R = 0.03
