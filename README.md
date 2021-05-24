@@ -37,6 +37,8 @@
    <li>
     <a href="#detectorConcr"> Detector concreto </a>
    </li>
+  </ul>
+ <ul>
  <li>
   <a href="#pathpl"> Path-Planning </a>
  </li>
