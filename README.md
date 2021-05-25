@@ -102,13 +102,13 @@ https://nanonets.com/blog/optical-flow/
 
 ## Cómo ejecutar la simulación
 1. Clonar el repositorio
-2. Instalar las siguientes dependencias
+2. Instalar PyTorch desde https://pytorch.org/, elegir CUDA 11.1 o mayor si se desea utilizar la GPU. 
+3. Instalar las siguientes dependencias
 ```
 pip install -U --pre tensorflow=="2.*"
 pip install tf_slim
 pip install -r requirements.txt
 ```
-3. Instalar PyTorch desde https://pytorch.org/, elegir CUDA 11.1 o mayor si se desea utilizar la GPU.
 4. Dirigirse a la carpeta "/Reconocimiento de imágenes" y ejecutar los siguientes comandos:
 
 ``` 
