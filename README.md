@@ -14,7 +14,7 @@
 </li>
 
 <li>
-<a href="#howtouse"> Cómo utilizar </a>
+<a href="#howtouse"> Cómo ejecutar la simulación </a>
 </li>
 
 <li>
